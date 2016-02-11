@@ -19,21 +19,22 @@
             </tr>
             <tr>
                 <td>Name</td>
-                <td>Sergiy</td>
+                <td> {{ applicant.first_name }} </td>
                 <td>Email</td>
-                <td>s.miletskiy@mockmyid.com</td>
+                {# <td>s.miletskiy@mockmyid.com</td> #}
+                <td>{{ applicant.email }}</td>
             </tr>
             <tr>
                 <td>Last name</td>
-                <td>Miletskiy</td>
+                <td>{{ applicant.last_name }}</td>
                 <td>Jabber</td>
-                <td>miletskiy@khavr.com</td>
+                <td>{{ applicant.jabber }}</td>
             </tr>
             <tr>
                 <td>Date of birth</td>
-                <td>24/03/1983</td>
+                <td>{{ applicant.birthday }}</td>
                 <td>Skype</td>
-                <td>s-miletskiy</td>
+                <td>{{ applicant.skype }}</td>
             </tr>
             <tr>
                 <td colspan="2">Bio:</td>
@@ -41,11 +42,9 @@
             </tr>
             <tr>
                 <td colspan="2"><textarea rows="7" cols="54">
-Some multiline bioSome multiline bioSome multiline bio Some multiline bioSome multiline bio Some multiline bioSome multiline biobio Some multiline bioSome multiline biobio Some multiline bioSome multiline bio
-</textarea></td>
+                {{ applicant.bio }}</textarea></td>
                 <td colspan="2"><textarea rows="7" cols="54">
-Some multiline Other contacts:Some multiline Other contacts:Some multiline Other contacts:Some multiline Other contacts:Some multiline Other contacts:Some multiline Other contacts:
-</textarea></td>
+                {{ applicant.contacts }}</textarea></td>
             </tr>
         </table>
         <br>
