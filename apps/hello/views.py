@@ -8,4 +8,4 @@ def contacts(request):
     """
     View for main page
     """
-    pass
+    return render(request, 'contacts.html')

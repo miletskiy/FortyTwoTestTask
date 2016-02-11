@@ -7,30 +7,49 @@
 {% block body_class %}content
 {% endblock %}
 
-{% block content %}
-    <h2>42 Coffee Cups Test Assignment</h2>
-    <table id="id_contacts_table">
-        <tr class="table_title">
-            <th>Contacts</th>
-        </tr>
-        <tr>
-            <td>Name</td>
-            <td>Email</td>
-        </tr>
-        <tr>
-            <td>Last name</td>
-            <td>Jabber</td>
-        </tr>
-        <tr>
-            <td>Date of birth</td>
-            <td>Skype</td>
-        </tr>
-        <tr>
-            <td>Bio:</td>
-            <td>Other contacts:</td>
-        </tr>
-    </table>
-    <br>
-    <hr>
-    <br>
+    {% block content %}
+    <div class="main">
+
+        <h2>42 Coffee Cups Test Assignment</h2>
+
+        <table id="id_contacts_table">
+            <tr class="table_title">
+                <th class="left_column" colspan="2"></th>
+                <th class="right_column" colspan="2">Contacts</th>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>Sergiy</td>
+                <td>Email</td>
+                <td>s.miletskiy@mockmyid.com</td>
+            </tr>
+            <tr>
+                <td>Last name</td>
+                <td>Miletskiy</td>
+                <td>Jabber</td>
+                <td>miletskiy@khavr.com</td>
+            </tr>
+            <tr>
+                <td>Date of birth</td>
+                <td>24/03/1983</td>
+                <td>Skype</td>
+                <td>s-miletskiy</td>
+            </tr>
+            <tr>
+                <td colspan="2">Bio:</td>
+                <td colspan="2">Other contacts:</td>
+            </tr>
+            <tr>
+                <td colspan="2"><textarea rows="7" cols="54">
+Some multiline bioSome multiline bioSome multiline bio Some multiline bioSome multiline bio Some multiline bioSome multiline biobio Some multiline bioSome multiline biobio Some multiline bioSome multiline bio
+</textarea></td>
+                <td colspan="2"><textarea rows="7" cols="54">
+Some multiline Other contacts:Some multiline Other contacts:Some multiline Other contacts:Some multiline Other contacts:Some multiline Other contacts:Some multiline Other contacts:
+</textarea></td>
+            </tr>
+        </table>
+        <br>
+        <hr>
+        <br>
+    </div>
 {% endblock %}

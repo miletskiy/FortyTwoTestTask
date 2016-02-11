@@ -2,8 +2,6 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 
-from ..views import contacts
-
 
 class ContactPageTest(TestCase):
     """
