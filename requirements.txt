@@ -1,2 +1,4 @@
 Django==1.6.7
 42cc-pystyle
+South
+Selenium==2.48.0
