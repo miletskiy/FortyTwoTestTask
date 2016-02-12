@@ -1,1 +1,31 @@
- 
+
+.main {
+    margin: 0 auto;
+    width: 750px;
+    margin-top: 22px;
+    font-family: Tahoma;
+    background-color: #cce5ff;
+    font-size: 90%;
+    padding: 20px;
+}
+
+body {
+    background-color: #EEEEEF;
+}
+
+table, th, td {
+    /*border: 1px solid olive;*/
+    border-spacing: 8px;
+}
+
+#id_contacts_table {
+    width: 100%;
+}
+
+.right_column {
+    width: 42%;
+}
+
+hr {
+    border: solid 1px black;
+}
