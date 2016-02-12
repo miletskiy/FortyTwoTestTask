@@ -50,7 +50,7 @@ class VisitorGoesToAdminPageTest(unittest.TestCase):
 
     def test_for_correct_admin_name_and_admin_pass(self):
         """ Hawk check for admin panel"""
-        self.browser.get(LOCALHOST+'/admin/')
+        self.browser.get(LOCALHOST+'admin/')
 
         login = self.browser.find_element_by_id('id_username')
         login.send_keys('admin')
