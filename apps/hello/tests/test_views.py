@@ -28,20 +28,6 @@ class ContactPageTest(TestCase):
         response = self.client.get(self.home_url)
         self.assertEqual(response.status_code, 200)
 
-    def test_contacts_view_passes_hardcoded_data(self):
-        """
-        Check for contacts view passes Applicant data to template
-        """
-        response = self.client.get(self.home_url)
-
-        self.assertEqual(response.context['applicant']['first_name'], 'John')
-        self.assertEqual(response.context['applicant']['last_name'], 'Galt')
-        self.assertEqual(
-            response.context['applicant']['birthday'], '05/02/1879')
-        self.assertIn('john.galt@gmail.com', str(response.content))
-        self.assertIn('john.galt@khavr.com', str(response.content))
-        self.assertIn('Some other contacts', str(response.content))
-
     def test_contacts_uses_right_model(self):
         """
         Check for correct instance in the template

@@ -21,3 +21,11 @@ table, th, td {
 #id_contacts_table {
     width: 100%;
 }
+
+.right_column {
+    width: 42%;
+}
+
+hr {
+    border: solid 1px black;
+}
