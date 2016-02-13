@@ -28,7 +28,7 @@ class NewVisitorTest(unittest.TestCase):
         """Hawk goes to check hello homepage"""
         self.browser.get(LOCALHOST)
         self.assertIn('42 Coffee Cups Test Assignment', self.browser.title)
-        header_text = self.browser.find_element_by_tag_name('h2').text
+        header_text = self.browser.find_element_by_tag_name('h1').text
         self.assertIn('42 Coffee Cups Test Assignment', header_text)
 
         # He also sees contacts of the applicant
@@ -62,4 +62,4 @@ class VisitorGoesToAdminPageTest(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main(warnings='ignore')
+    unittest.main()
