@@ -20,5 +20,5 @@ collectstatic:
 .PHONY: test syncdb migrate
 
 ftest:
-	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $ python3 \
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $ python \
 	$(TEST_FOLDER_HELLO)functional_tests.py

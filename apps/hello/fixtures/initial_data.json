@@ -1,34 +1,34 @@
 [
 {
+    "pk": 1, 
+    "model": "hello.applicant", 
     "fields": {
-        "is_superuser": true,
-        "groups": [],
-        "email": "admin@admin.com",
-        "is_active": true,
-        "last_name": "",
-        "first_name": "",
-        "is_staff": true,
-        "user_permissions": [],
-        "date_joined": "2016-02-12T08:50:03Z",
-        "username": "admin",
-        "password": "pbkdf2_sha256$12000$1wdmFzI3udGX$SMZl7eBDxLlqrrICmyJydBOOShcyerf1Af1M1NBfZgY=",
-        "last_login": "2016-02-12T09:05:44Z"
-    },
-    "pk": 1,
-    "model": "auth.user"
+        "bio": "Ready to learn from experienced developers. Ready to perform small tasks. \r\nHave experience creating sites on WordPress. Know that there are Google and Stackoverflow. \r\nCollect nice and simple problem solving.\r\nPROFESSIONAL SKILLS:\r\nPython-basic\r\nDjango-basic\r\nHTML,CSS, JavaScript-basic\r\nPostgreSQL,MySQL,SQLite\r\nADDITIONAL SKILLS:\r\nGit,MC,CLI,Virtualenv,Ubuntu\r\nExperience with deployment\r\nEnglish-intermediate\r\nEDUCATION:\r\nDonetsk National University of Economics and Trade,Engineer- technologist of the Department of nutrition.\r\nADDITIONAL EDUCATION:\r\nPodobabook www.vitaliypodoba.com/books/django-for-beginners\r\nhttps://www.coursera.org/course/pythonlearn \r\nhttps://www.codecademy.com/tracks/python", 
+        "first_name": "Sergey", 
+        "last_name": "Miletskiy", 
+        "contacts": "https://github.com/miletskiy\r\nhttps://www.facebook.com/s.miletskiy", 
+        "birthday": "1983-03-24", 
+        "skype": "s-miletskiy", 
+        "jabber": "s.miletskiy@khavr.com", 
+        "email": "s.miletskiy@mockmyid.com"
+    }
 },
 {
+    "pk": 1, 
+    "model": "auth.user", 
     "fields": {
-        "skype": "s-miletskiy",
-        "last_name": "Miletskiy",
-        "first_name": "Sergey",
-        "bio": "Ready to learn from experienced developers. Ready to perform small tasks. Have experience creating sites on WordPress. Know that there are Google and Stackoverflow. Collect nice and simple problem solving.\r\nPROFESSIONAL SKILLS:\r\n\u2022 Python-basic\r\n\u2022 Django-basic\r\n\u2022 HTML,CSS,JavaScript-basic \u2022 PostgreSQL,MySQL,SQLite\r\nADDITIONAL SKILLS:\r\n\u2022 Git,MC,CLI,Virtualenv,Ubuntu \u2022 Experiencewithdeployment\r\n\u2022 English-intermediate\r\nEDUCATION:\r\n\u2022 DonetskNationalUniversityofEconomicsandTrade,Engineer- technologist of the Department of nutrition.\r\nADDITIONAL EDUCATION:\r\n\u2022 Podoba\u2019sbookwww.vitaliypodoba.com/books/django-for-beginners/\r\n\u2022 Coursera https://www.coursera.org/course/pythonlearn Certificate\r\n\u2022 Codecademy.comhttps://www.codecademy.com/tracks/python",
-        "jabber": "miletskiy@khavr.com",
-        "birthday": "1983-03-24",
-        "email": "s.miletskiy@mockmyid.com",
-        "contacts": "https://github.com/miletskiy\r\nhttps://www.facebook.com/s.miletskiy"
-    },
-    "pk": 1,
-    "model": "hello.applicant"
+        "username": "admin", 
+        "first_name": "", 
+        "last_name": "", 
+        "is_active": true, 
+        "is_superuser": true, 
+        "is_staff": true, 
+        "last_login": "2016-02-13T08:24:40.558Z", 
+        "groups": [], 
+        "user_permissions": [], 
+        "password": "pbkdf2_sha256$12000$OE5CPIwvt87G$gXxy/7B+CBXXGTCT8B2RyHg8aO2EgHbGfPfII/zP5xU=", 
+        "email": "admin@admin.com", 
+        "date_joined": "2016-02-13T08:22:56.831Z"
+    }
 }
 ]
