@@ -3,13 +3,14 @@
 {% block title %}Contacts
 {% endblock title %}
 
-
     {% block content %}
-
 
 <div class="main">
     <h1>42 Coffee Cups Test Assignment</h1>
-    <h2>Contacts</h2>
+    {% if not applicant %}
+        <p>There are no applicants in database.</p>
+    {% else %}
+        <h2>Contacts</h2>
     <div class="left_column">
         <div class="string_block">
             <ul>
@@ -18,46 +19,15 @@
                 <li>Date of birth</li>
             </ul>
         </div>
-        <div class="string_block">
+        <div class="string_block list2">
             <ul>
-                <li>John</li>
-                <li>Galt</li>
-                <li>1873-02-12</li>
+                <li>{{ applicant.first_name }}</li>
+                <li>{{ applicant.last_name }}</li>
+                <li>{{ applicant.birthday }}</li>
             </ul>
         </div>
         <div>Bio:</div>
-        <p>Ready to learn from experienced developers.
-Ready to perform small tasks.
-Have experience creating sites on WordPress.
-Know that there are Google and Stackoverflow.
-Collect nice and simple problem solving.
-            <br>
-PROFESSIONAL SKILLS:
-                <br>
-Python-basic,
-Django-basic,
-HTML,CSS, JavaScript-basic,
-PostgreSQL,MySQL,SQLite.
-                    <br>
-ADDITIONAL SKILLS:
-                        <br>
-Git,MC,CLI,Virtualenv,Ubuntu.
-Experience with deployment.
-English-intermediate.
-                            <br>
-EDUCATION:
-                                <br>
-Donetsk National University of Economics and Trade,Engineer- technologist of the Department of nutrition.
-                                    <br>
-ADDITIONAL EDUCATION:
-                                        <br>
-Podobabook www.vitaliypodoba.com/books/django-for-beginners
-                                            <br>
-https://www.coursera.org/course/pythonlearn
-                                                <br>
-https://www.codecademy.com/tracks/python
-                                                    <br>
-        </p>
+            <p class="bio_text">{{ applicant.bio }}</p>
         </div>
         <div class="right_column">
             <div class="string_block">
@@ -67,17 +37,17 @@ https://www.codecademy.com/tracks/python
                     <li>Skype:</li>
                 </ul>
             </div>
-            <div class="string_block">
+            <div class="string_block list4">
                 <ul>
-                    <li>john.galt@gmail.com</li>
-                    <li>john.galt@gmail.com</li>
-                    <li>john.galt</li>
+                    <li>{{ applicant.email }}</li>
+                    <li>{{ applicant.jabber }}</li>
+                    <li>{{ applicant.skype }}</li>
                 </ul>
             </div>
             <div>Other contacts:</div>
-            <p>https://github.com/miletskiy
-               https://www.facebook.com/s.miletskiy</p>
+            <p>{{ applicant.contacts }}</p>
         </div>
     </div>
+    {% endif %}
 
-{% endblock %}
+    {% endblock %}

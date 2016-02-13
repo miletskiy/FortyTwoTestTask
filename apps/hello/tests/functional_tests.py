@@ -3,7 +3,6 @@ from selenium import webdriver
 import unittest
 from selenium.webdriver.common.keys import Keys
 
-
 LOCALHOST = 'http://localhost:8000/'
 
 
@@ -18,23 +17,24 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
-    def check_for_row_in_contacts_table(self, row_text):
-        "helper function for check rows in table"
-        table = self.browser.find_element_by_id('id_contacts_table')
-        rows = table.find_elements_by_tag_name('td')
-        self.assertIn(row_text, [row.text for row in rows])
-
     def test_visitor_can_see_the_main_page(self):
         """Hawk goes to check hello homepage"""
         self.browser.get(LOCALHOST)
-        self.assertIn('42 Coffee Cups Test Assignment', self.browser.title)
+        self.assertIn('Contacts 42 Coffee Cups Test Assignment',
+                      self.browser.title)
         header_text = self.browser.find_element_by_tag_name('h1').text
         self.assertIn('42 Coffee Cups Test Assignment', header_text)
 
         # He also sees contacts of the applicant
-        self.check_for_row_in_contacts_table('Sergey')
-        self.check_for_row_in_contacts_table('Miletskiy')
-        self.check_for_row_in_contacts_table('s.miletskiy@mockmyid.com')
+        first_name = self.browser.find_element_by_css_selector(
+            '.list2 li:nth-child(1)').text
+        last_name = self.browser.find_element_by_css_selector(
+            '.list2 li:nth-child(2)').text
+        email = self.browser.find_element_by_css_selector(
+            '.list4 li:nth-child(1)').text
+        self.assertEqual('Sergey', first_name)
+        self.assertEqual('Miletskiy', last_name)
+        self.assertEqual('s.miletskiy@mockmyid.com', email)
 
 
 class VisitorGoesToAdminPageTest(unittest.TestCase):

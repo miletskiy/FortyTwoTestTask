@@ -27,9 +27,7 @@ h1 {
 }
 
 h2 {
-  font-family: Tahoma;
   font-size: 1.2em;
-  font-weight: 400;
   margin-bottom: 20px;
   float: right;
   width: 42%;
@@ -50,7 +48,7 @@ h2 {
 
 .string_block {
   display: inline-block;
-  width: 40%;
+  width: 24%;
 }
 
 .string_block li {
@@ -60,6 +58,10 @@ h2 {
 p {
   line-height: 20px;
   margin-top: 7px;
+}
+
+.bio_text{
+  text-indent: 24px;
 }
 
 hr {

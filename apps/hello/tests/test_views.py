@@ -58,3 +58,4 @@ class ContactPageTest(TestCase):
 
         self.assertEqual(applicants, 0)
         self.assertIsNone(response.context['applicant'])
+        self.assertIn('There are no applicants in database.', response.content)
