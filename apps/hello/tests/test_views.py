@@ -14,25 +14,14 @@ class ContactPageTest(TestCase):
     def setUp(self):
         self.home_url = reverse('hello:contacts')
 
-    def test_contacts_page_renders_correct_response(self):
+    def test_contacts_view(self):
         """
-        Contacts view uses correct template for main page
+        Contacts view uses correct template for main page,
+        answer from server and uses correct instance in the template
         """
         response = self.client.get(self.home_url)
         self.assertTemplateUsed(response, 'contacts.html')
-
-    def test_contacts_view_get_request(self):
-        """
-        Check for answer from server
-        """
-        response = self.client.get(self.home_url)
         self.assertEqual(response.status_code, 200)
-
-    def test_contacts_uses_right_model(self):
-        """
-        Check for correct instance in the template
-        """
-        response = self.client.get(self.home_url)
         self.assertIsInstance(response.context['applicant'], Applicant)
 
     def test_contacts_view_passes_correct_insatance(self):
@@ -69,3 +58,4 @@ class ContactPageTest(TestCase):
 
         self.assertEqual(applicants, 0)
         self.assertIsNone(response.context['applicant'])
+        self.assertIn('There are no applicants in database.', response.content)
