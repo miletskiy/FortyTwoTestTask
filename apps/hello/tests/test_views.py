@@ -19,10 +19,21 @@ class ContactPageTest(TestCase):
         Contacts view uses correct template for main page,
         answer from server and uses correct instance in the template
         """
+        applicant = Applicant.objects.first()
         response = self.client.get(self.home_url)
         self.assertTemplateUsed(response, 'contacts.html')
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.context['applicant'], Applicant)
+        self.assertEqual(response.context['applicant'].first_name,
+                         applicant.first_name)
+        self.assertEqual(response.context['applicant'].last_name,
+                         applicant.last_name)
+        self.assertEqual(response.context['applicant'].email,
+                         applicant.email)
+        self.assertEqual(response.context['applicant'].birthday,
+                         applicant.birthday)
+        self.assertEqual(response.context['applicant'].bio,
+                         applicant.bio)
 
     def test_contacts_view_passes_correct_insatance(self):
         """

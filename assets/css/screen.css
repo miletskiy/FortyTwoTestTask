@@ -67,3 +67,7 @@ p {
 hr {
   border: solid 1px black;
 }
+
+textarea {
+  margin-top: 8px;
+}
