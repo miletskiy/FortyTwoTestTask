@@ -1,10 +1,24 @@
-{% extends "base.html" %}
-{% load staticfiles %}
 
-{% block title %}Requests{%endblock%}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Requests 42 Coffee Cups Test Assignment</title>
 
-{% block content %}
-    <div class="main requests">
+        <meta http-equiv="X-UA-Compatible" content="chrome=IE7" />
+
+        <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+
+        <link rel="stylesheet" href="../../../assets/css/reset_css.css" media="screen, projection"/>
+        <link rel="stylesheet" href="../../../assets/css/screen.css" media="screen, projection"/>
+
+    </head>
+    <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
+
+         <div class="main">
         <h1>42 Coffee Cups Test Assignment</h1>
         <h2>Requests</h2>
 
@@ -85,10 +99,8 @@
         </table>
         <hr>
       <div>
-          <a href="{% url 'hello:contacts' %}">back to homepage</a>
+          <a href="#">back to homepage</a>
       </div>
     </div>
-
-
-{% endblock %}
-
+    </body>
+</html>
