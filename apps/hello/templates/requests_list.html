@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Requests{%endblock%}
+
+{% block content %}
+    <div class="main">
+        <h1>42 Coffee Cups Test Assignment</h1>
+        <h2>Requests</h2>
+
+        <table width="100%" id="id_requests_table">
+            <tr class="title">
+                <th>Id</th>
+                <th>Title</th>
+                <th>Emergence</th>
+                <th>Path</th>
+                <th>Method</th>
+                <th>User</th>
+            </tr>
+
+        {% for req in requests %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ req.META.CONTENT_TYPE }}</td>
+                <td>{{ req.GET.time }}</td>
+                <td>{{ req.path }}</td>
+                <td>{{ req.method }}</td>
+                <td>{{ req.user }}</td>
+            </tr>
+        {% endfor %}
+
+        </table>
+        <hr>
+      <div>
+          <a href="{% url 'hello:contacts' %}">back to homepage</a>
+      </div>
+    </div>
+
+{% endblock %}
