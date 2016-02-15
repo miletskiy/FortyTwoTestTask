@@ -1,7 +1,7 @@
 
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-
+from django.http import HttpRequest
 from ..models import Applicant
 
 
@@ -59,3 +59,25 @@ class ContactPageTest(TestCase):
         self.assertEqual(applicants, 0)
         self.assertIsNone(response.context['applicant'])
         self.assertIn('There are no applicants in database.', response.content)
+
+
+class RequestsPageTest(TestCase):
+    """
+    Test for requests view
+    """
+
+    def setUp(self):
+        self.requests_url = reverse('hello:requests')
+
+    def test_requests_view_returning_hardcoded_data_for_the_template(self):
+        """
+        Requests view uses correct template for requests page,
+        get answer from server and passes 10 objects
+        """
+        response = self.client.get(self.requests_url)
+        length_requests = len(response.context['requests'])
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'requests_list.html')
+        self.assertEqual(length_requests, 10)
+        self.assertIsInstance(response.context['requests'][0], HttpRequest)
