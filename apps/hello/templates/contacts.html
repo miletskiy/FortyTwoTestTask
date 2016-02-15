@@ -11,6 +11,8 @@
         <p>There are no applicants in database.</p>
     {% else %}
         <h2>Contacts</h2>
+    <div class="data">
+
     <div class="left_column">
         <div class="string_block">
             <ul>
@@ -49,5 +51,11 @@
         </div>
     </div>
     {% endif %}
-
+    <div class="bottom_block">
+      <hr>
+      <div>
+          <a id="id_requests" href="{% url 'hello:requests' %}">requests</a>
+      </div>
+    </div>
+</div>
     {% endblock %}
