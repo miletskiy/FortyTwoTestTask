@@ -7,7 +7,9 @@
     <div class="main">
         <h1>42 Coffee Cups Test Assignment</h1>
         <h2>Requests</h2>
-
+    {% if not requests %}
+        <p>There are no records in the database</p>
+    {% else %}
         <table width="100%" id="id_requests_table">
             <tr class="title">
                 <th>Id</th>
@@ -30,6 +32,7 @@
         {% endfor %}
 
         </table>
+    {% endif %}
         <hr>
       <div>
           <a href="{% url 'hello:contacts' %}">back to homepage</a>

@@ -52,3 +52,13 @@ class Applicant(models.Model):
 
     def __unicode__(self):
         return u'{} {}'.format(self.first_name, self.last_name)
+
+
+class DatabaseRequest(models.Model):
+
+    class Meta:
+        verbose_name = "DatabaseRequest"
+        verbose_name_plural = "DatabaseRequests"
+
+    def __unicode__(self):
+        pass
