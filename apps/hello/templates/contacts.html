@@ -27,7 +27,7 @@
             </ul>
         </div>
         <div>Bio:</div>
-            <p class="bio_text">{{ applicant.bio }}</p>
+            <textarea rows="18" cols="64" class="bio_text">{{ applicant.bio }}</textarea>
         </div>
         <div class="right_column">
             <div class="string_block">
@@ -45,7 +45,7 @@
                 </ul>
             </div>
             <div>Other contacts:</div>
-            <p>{{ applicant.contacts }}</p>
+            <textarea rows="18" cols="42">{{ applicant.contacts }}</textarea>
         </div>
     </div>
     {% endif %}
