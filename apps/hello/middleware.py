@@ -12,11 +12,8 @@ class SavesRequestsMiddleware(object):
         Overriding standard method
         """
         if request.is_ajax():
-            pass
-        else:
-            DatabaseRequest.objects.create(
-                path=request.path,
-                method=request.method,
-                user=request.user
-            )
-            return None
+            return
+
+        DatabaseRequest.objects.create(path=request.path,
+                                       method=request.method,
+                                       user=request.user)

@@ -112,15 +112,13 @@ class RequestsPageTest(TestCase):
         responseAJAX = self.client.get(reverse('hello:requests'),
                                        HTTP_X_REQUESTED_WITH='XMLHttpRequest')
 
-        quantity = len(responseAJAX.context['requests'])
-        self.assertEqual(quantity, 1)
+        self.assertContains(responseAJAX, '"pk": 1', 1, 200)
 
         self.client.get(reverse('hello:contacts'))
         responseAJAX = self.client.get(reverse('hello:requests'),
                                        HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        quantity = len(responseAJAX.context['requests'])
 
-        self.assertEqual(quantity, 2)
+        self.assertContains(responseAJAX, '"pk": 2', 1, 200)
 
     def test_if_not_middleware_database_empty(self):
         """
@@ -133,5 +131,4 @@ class RequestsPageTest(TestCase):
         responseAJAX = self.client.get(reverse('hello:requests'),
                                        HTTP_X_REQUESTED_WITH='XMLHttpRequest')
 
-        self.assertIn('There are no records in the database',
-                      responseAJAX.content)
+        self.assertEqual(len(responseAJAX.content), 2)

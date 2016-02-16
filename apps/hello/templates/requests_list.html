@@ -20,6 +20,7 @@
                 <th>User</th>
             </tr>
 
+            <tbody id="id_tbody">
         {% for req in requests %}
             <tr>
                 <td>{{ req.id }}</td>
@@ -30,6 +31,7 @@
                 <td>{{ req.user }}</td>
             </tr>
         {% endfor %}
+            </tbody>
 
         </table>
     {% endif %}
