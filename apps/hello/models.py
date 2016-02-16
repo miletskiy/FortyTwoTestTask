@@ -60,7 +60,7 @@ class DatabaseRequest(models.Model):
         verbose_name = "DatabaseRequest"
         verbose_name_plural = "DatabaseRequests"
 
-   title = models.CharField(
+    title = models.CharField(
         max_length=30,
         verbose_name="Title",
         default="Request in database"
