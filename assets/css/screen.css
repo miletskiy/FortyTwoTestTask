@@ -66,10 +66,6 @@ p {
   margin-top: 7px;
 }
 
-.bio_text{
-  text-indent: 24px;
-}
-
 hr {
   border: solid 1px black;
 }
@@ -93,4 +89,3 @@ table, th, td {
 th {
   font-weight: bold;
 }
-

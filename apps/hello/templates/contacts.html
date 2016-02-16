@@ -29,7 +29,7 @@
             </ul>
         </div>
         <div>Bio:</div>
-            <p class="bio_text">{{ applicant.bio }}</p>
+            <p class="bio_text">{{ applicant.bio | linebreaks }}</p>
         </div>
         <div class="right_column">
             <div class="string_block">
@@ -47,7 +47,7 @@
                 </ul>
             </div>
             <div>Other contacts:</div>
-            <p>{{ applicant.contacts }}</p>
+            <p>{{ applicant.contacts | linebreaks }}</p>
         </div>
     </div>
     {% endif %}
