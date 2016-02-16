@@ -92,8 +92,7 @@ class RequestsPageTest(TestCase):
         length_requests = len(response.context['requests'])
 
         self.assertEqual(length_requests, 10)
-        self.assertEqual(quantity_requests, 10)
-        self.assertNotEqual(quantity_requests, length_requests)
+        self.assertEqual(quantity_requests, 16)
 
     def test_requests_view_passes_objects_in_right_order(self):
         """
@@ -111,14 +110,14 @@ class RequestsPageTest(TestCase):
         """
         self.client.get(reverse('hello:contacts'))
         responseAJAX = self.client.get(reverse('hello:requests'),
-            HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                                       HTTP_X_REQUESTED_WITH='XMLHttpRequest')
 
         quantity = len(responseAJAX.context['requests'])
         self.assertEqual(quantity, 1)
 
         self.client.get(reverse('hello:contacts'))
         responseAJAX = self.client.get(reverse('hello:requests'),
-            HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                                       HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         quantity = len(responseAJAX.context['requests'])
 
         self.assertEqual(quantity, 2)
@@ -132,7 +131,7 @@ class RequestsPageTest(TestCase):
         self.assertEqual(quantity_reqs, 0)
 
         responseAJAX = self.client.get(reverse('hello:requests'),
-            HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                                       HTTP_X_REQUESTED_WITH='XMLHttpRequest')
 
-        self.assertContains(responseAJAX.content,
-            'There are no records in the database')
+        self.assertIn('There are no records in the database',
+                      responseAJAX.content)

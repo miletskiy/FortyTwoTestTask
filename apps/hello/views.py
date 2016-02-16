@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from .models import Applicant
-import datetime
+from .models import DatabaseRequest
 
 
 def contacts(request):
@@ -20,11 +20,6 @@ def requests_list(request):
     """
     View for requests page
     """
-    requests = []
-    for i in range(10):
-        loq = request.GET.copy()
-        loq['time'] = datetime.datetime.now()
-        request.GET = loq
-        requests.append(request)
+    requests = DatabaseRequest.objects.all()[:10]
 
     return render(request, 'requests_list.html', {'requests': requests})

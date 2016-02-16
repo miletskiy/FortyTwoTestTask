@@ -22,9 +22,9 @@
 
         {% for req in requests %}
             <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ req.META.CONTENT_TYPE }}</td>
-                <td>{{ req.GET.time }}</td>
+                <td>{{ req.id }}</td>
+                <td>{{ req.title }}</td>
+                <td>{{ req.emergence }}</td>
                 <td>{{ req.path }}</td>
                 <td>{{ req.method }}</td>
                 <td>{{ req.user }}</td>

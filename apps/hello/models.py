@@ -59,6 +59,7 @@ class DatabaseRequest(models.Model):
     class Meta:
         verbose_name = "DatabaseRequest"
         verbose_name_plural = "DatabaseRequests"
+        ordering = ['-emergence']
 
     title = models.CharField(
         max_length=30,

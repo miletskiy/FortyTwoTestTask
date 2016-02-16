@@ -18,7 +18,7 @@ class DatabaseRequestTest(TestCase):
         self.assertEqual(quantity_reqs, 0)
 
         self.client.get(reverse('hello:contacts'))
-        quantity_reqs = DatabaseRequest.objects.all()
+        quantity_reqs = DatabaseRequest.objects.all().count()
 
         self.assertEqual(quantity_reqs, 1)
 
