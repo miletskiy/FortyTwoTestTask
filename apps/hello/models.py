@@ -49,6 +49,12 @@ class Applicant(models.Model):
         blank=True,
         verbose_name=u'Other contacts'
     )
+    photo = models.ImageField(
+        upload_to='photo',
+        blank=True,
+        max_length=100,
+        default=''
+    )
 
     def __unicode__(self):
         return u'{} {}'.format(self.first_name, self.last_name)
