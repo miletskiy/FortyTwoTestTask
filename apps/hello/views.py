@@ -29,3 +29,10 @@ def requests_list(request):
         return HttpResponse(data, content_type='application/json')
 
     return render(request, 'requests_list.html', {'requests': requests})
+
+
+def edit_applicant(request):
+    """
+    View for edit data page
+    """
+    pass

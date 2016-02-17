@@ -81,7 +81,7 @@ class RequestsPageTest(TestCase):
     def setUp(self):
         self.requests_url = reverse('hello:requests')
 
-    def test_requests_view_returning_hardcoded_data_for_the_template(self):
+    def test_requests_view_is_alive(self):
         """
         Requests view uses correct template for requests page,
         get answer from server and passes 10 objects
@@ -143,3 +143,23 @@ class RequestsPageTest(TestCase):
                                        HTTP_X_REQUESTED_WITH='XMLHttpRequest')
 
         self.assertEqual(len(responseAJAX.content), 2)
+
+
+class EditApplicantPageTest(TestCase):
+    """
+    Test for edit_applicant view
+    """
+
+    def setUp(self):
+        self.requests_url = reverse('hello:edit_applicant')
+
+    def test_edit_applicant_view_is_alive(self):
+        """
+        Edit_applicant view uses correct template for edit_applicant page,
+        get answer from server and passes form Applicant
+        """
+        response = self.client.get(self.requests_url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'edit_applicant.html')
+        self.assertIsInstance(response.context['form'], ApplicantForm)
