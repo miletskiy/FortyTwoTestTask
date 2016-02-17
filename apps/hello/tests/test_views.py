@@ -2,11 +2,13 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.http import HttpRequest
+from django.db.models import ImageField
 
 from ..models import Applicant
 from ..models import DatabaseRequest
 from ..views import edit_applicant
 from ..forms import ApplicantForm
+
 
 
 class ContactPageTest(TestCase):
@@ -74,6 +76,14 @@ class ContactPageTest(TestCase):
         self.assertEqual(applicants, 0)
         self.assertIsNone(response.context['applicant'])
         self.assertIn('There are no applicants in database.', response.content)
+
+    def test_applicatn_have_image_field(self):
+        """
+        Check that applicant instance have ImageField
+        """
+        field_photo = Applicant._meta.get_field('photo')
+
+        self.assertIsInstance(field_photo, ImageField)
 
 
 class RequestsPageTest(TestCase):
