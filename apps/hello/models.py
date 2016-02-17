@@ -52,3 +52,37 @@ class Applicant(models.Model):
 
     def __unicode__(self):
         return u'{} {}'.format(self.first_name, self.last_name)
+
+
+class DatabaseRequest(models.Model):
+
+    class Meta:
+        verbose_name = "DatabaseRequest"
+        verbose_name_plural = "DatabaseRequests"
+        ordering = ['-emergence']
+
+    title = models.CharField(
+        max_length=30,
+        verbose_name="Title",
+        default="Request in database"
+    )
+    emergence = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Date time of the emergence"
+    )
+    path = models.CharField(
+        max_length=100,
+        verbose_name="Request path"
+    )
+    method = models.CharField(
+        max_length=4,
+        verbose_name="Request method"
+    )
+    user = models.CharField(
+        max_length=42,
+        verbose_name="User",
+        blank=True
+    )
+
+    def __unicode__(self):
+        return u'{} {}'.format(self.title, self.emergence)

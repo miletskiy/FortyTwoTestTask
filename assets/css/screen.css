@@ -16,6 +16,12 @@
   clear: both;
 }
 
+.data:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
 body {
   background-color: #EEEEEF;
 }
@@ -36,19 +42,19 @@ h2 {
 .left_column {
   clear: both;
   float: left;
-  width: 56%;
+  width: 42%;
   box-sizing: border-box;
 }
 
 .right_column {
   float: right;
-  width: 42%;
+  width: 56%;
   box-sizing: border-box;
 }
 
 .string_block {
   display: inline-block;
-  width: 24%;
+  width: 30%;
 }
 
 .string_block li {
@@ -64,6 +70,29 @@ hr {
   border: solid 1px black;
 }
 
-textarea {
-  margin-top: 8px;
+.bottom_block {
+  margin: 10px 0;
+}
+
+a:hover {
+    color: red;
+    text-decoration: none;]
+}
+
+table, th, td {
+  border: 1px solid black;
+  text-align:center;
+  padding: 8px;
+  margin-bottom: 20px;
+}
+
+th {
+  font-weight: bold;
+}
+
+.photo_applicant {
+  width: 100%;
+}
+input {
+  margin: 3px 0;
 }
