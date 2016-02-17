@@ -1,9 +1,12 @@
 
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from django.http import HttpRequest
 
 from ..models import Applicant
 from ..models import DatabaseRequest
+from ..views import edit_applicant
+from ..forms import ApplicantForm
 
 
 class ContactPageTest(TestCase):
@@ -151,15 +154,57 @@ class EditApplicantPageTest(TestCase):
     """
 
     def setUp(self):
-        self.requests_url = reverse('hello:edit_applicant')
+        self.edit_url = reverse('hello:edit_applicant')
 
     def test_edit_applicant_view_is_alive(self):
         """
         Edit_applicant view uses correct template for edit_applicant page,
         get answer from server and passes form Applicant
         """
-        response = self.client.get(self.requests_url)
+        response = self.client.get(self.edit_url)
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'edit_applicant.html')
         self.assertIsInstance(response.context['form'], ApplicantForm)
+
+    def test_edit_page_contains_empty_form_with_empty_db(self):
+        """
+        Check for correct page with empty db
+        """
+        response = self.client.get(self.edit_url)
+        empty_form = ApplicantForm()
+
+        self.assertEqual(response.context['form'], empty_form)
+
+    def test_edit_page_contains_form_with_applicant_data(self):
+        """
+        Check for correct data in the form
+        """
+        response = self.client.get(self.edit_url)
+        applicant = Applicant.objects.first()
+
+        self.assertContains(response.content, applicant.first_name)
+        self.assertContains(response.content, applicant.last_name)
+        self.assertIn(applicant.email,response.content)
+        self.assertIn(applicant.birthday, response.content)
+
+    def test_edit_applicant_page_redirects_for_anonymous_user(self):
+        """
+        Check that edit_applicant redirects for anonymous user
+        """
+        response = self.client.get(reverse('hello:edit_applicant'))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertFalse(response.content)
+
+    def test_edit_applicant_page_displays_for_logged_user(self):
+        """
+        Check that edit_applicant page gets correct answer from server
+        for logged user
+        """
+        request = HttpRequest()
+        response = edit_applicant(request,{'user':'admin','password':'admin'})
+        response = self.client.get(self.url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.content)
