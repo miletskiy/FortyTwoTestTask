@@ -42,19 +42,19 @@ h2 {
 .left_column {
   clear: both;
   float: left;
-  width: 56%;
+  width: 42%;
   box-sizing: border-box;
 }
 
 .right_column {
   float: right;
-  width: 42%;
+  width: 56%;
   box-sizing: border-box;
 }
 
 .string_block {
   display: inline-block;
-  width: 24%;
+  width: 30%;
 }
 
 .string_block li {
@@ -88,4 +88,11 @@ table, th, td {
 
 th {
   font-weight: bold;
+}
+
+.photo_applicant {
+  width: 100%;
+}
+input {
+  margin: 3px 0;
 }
