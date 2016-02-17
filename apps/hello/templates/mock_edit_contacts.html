@@ -1,105 +1,100 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 
-<html lang="en">
+{% block title %}Edit Applicant
+{% endblock title %}
 
-<head>
-    <meta charset="utf-8">
-    <title>Edit 42 Coffee Cups Test Assignment</title>
+{% block content %}
 
-    <meta http-equiv="X-UA-Compatible" content="chrome=IE7" />
+<div class="main">
+    <h1>42 Coffee Cups Test Assignment</h1>
+    {% if not form.instance %}
+    <br>
+        <p>There are no applicants in database.</p>
+    {% else %}
 
-    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <br>
+    <form action="{% url "hello:edit_applicant" %}" method="post"
+          id="id_edit_form" novalidate enctype="multipart/form-data">
+      {% csrf_token %}
 
+    <div class="data">
 
-    <link rel="stylesheet" href="../../../assets/css/reset_css.css" media="screen, projection" />
-    <link rel="stylesheet" href="../../../assets/css/screen.css" media="screen, projection" />
-
-</head>
-
-<body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
-
-    <div class="main">
-        <h1>42 Coffee Cups Test Assignment</h1>
-
-        <br>
-        <br>
-
-        <div class="data">
-
-            <div class="left_column">
-                <div class="string_block">
-                    <ul>
-                        <li>Name</li>
-                        <li>Last name</li>
-                        <li>Date of birth</li>
-                    </ul>
-                </div>
-                <div class="string_block list2">
-                    <ul>
-                        <input id="id_first_name" maxlength="256" name="first_name" type="text" />
-                        <input id="id_last_name" maxlength="256" name="last_name" type="text" />
-                        <input id="id_birthday" name="birthday" type="text" />
-                    </ul>
-                </div>
-                <br>
-                <br>
-                <div>Photo:
-                    <input id="id_image" name="image" type="file" />
-                </div>
-
-                <br>
-                <br>
-                <img src="../../../assets/img/default.jpg" alt="Applicant_photo"
-                class="photo_applicant">
-
+        <div class="left_column">
+            <div class="string_block">
+                <ul>
+                    <li>Name</li>
+                    <li>Last name</li>
+                    <li>Date of birth</li>
+                </ul>
             </div>
-            <div class="right_column">
-                <div class="string_block">
-                    <ul>
-                        <li>Email:</li>
-                        <li>Jabber:</li>
-                        <li>Skype:</li>
-                    </ul>
-                </div>
-                <div class="string_block list4">
-                    <ul>
-                        <input id="id_email" maxlength="50" name="email" type="email" />
-                        <input id="id_jabber" maxlength="50" name="jabber" type="text" />
-                        <input id="id_skype" maxlength="50" name="skype" type="text" />
-                    </ul>
-                </div>
-                <br>
-                <br>
-
-                <div>Other contacts:</div>
-                <br>
-                <textarea cols="60" id="id_contacts" name="contacts" rows="3"></textarea>
-                <br>
-                <br>
-
-                <div>Bio:</div>
-                <br>
-                <textarea cols="60" id="id_bio" name="bio" rows="18"></textarea>
-
+            <div class="string_block list2">
+                <ul>
+                    <li>{{ form.first_name }}</li>
+                    <li>{{ form.last_name }}</li>
+                    <li>{{ form.birthday }}</li>
+                </ul>
             </div>
+            <br>
+            <br>
+            <div>Photo:
+                <input id="id_image" name="image" type="file" />
+            </div>
+
+            <br>
+            <br>
+            <img src="{{ STATIC_URL }}default.jpg" alt="Applicant_photo"
+            class="photo_applicant">
+
         </div>
-        <br>
-
-        <div>
-            <input type="submit" id="id_save_button" name="save_button" value="Save" />
-            <a href="#" name="cancel_button">Cancel</a>
-        </div>
-
-
-        <div class="bottom_block">
-            <hr>
-            <div>
-                <a id="id_requests" href="#">requests</a>
+        <div class="right_column">
+            <div class="string_block">
+                <ul>
+                    <li>Email:</li>
+                    <li>Jabber:</li>
+                    <li>Skype:</li>
+                </ul>
             </div>
+            <div class="string_block list4">
+                <ul>
+                    <li>{{ form.email }}</li>
+                    <li>{{ form.jabber }}</li>
+                    <li>{{ form.skype }}</li>
+                </ul>
+            </div>
+            <br>
+            <br>
+
+            <div>Other contacts:</div>
+            <br>
+               <div>{{ form.contacts }}</div>
+            <br>
+            <br>
+
+            <div>Bio:</div>
+            <br>
+            <br>
+               <div>{{ form.bio }}</div>
+            <br>
+
         </div>
     </div>
-</body>
+    <br>
 
-</html>
+    <div>
+        <input type="submit" id="id_save_button" name="save_button" value="Save" />
+        <a href="{% url 'hello:contacts' %}" name="cancel_button">Cancel</a>
+    </div>
+
+    {% endif %}
+
+    <div class="bottom_block">
+        <hr>
+        <div>
+            <a id="id_requests" href="{% url 'hello:requests' %}">requests</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
