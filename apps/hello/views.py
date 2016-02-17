@@ -6,6 +6,7 @@ from django.http import HttpResponse
 # Create your views here.
 from .models import Applicant
 from .models import DatabaseRequest
+from .forms import ApplicantForm
 
 
 def contacts(request):
@@ -35,4 +36,28 @@ def edit_applicant(request):
     """
     View for edit data page
     """
-    pass
+    applicant = Applicant.objects.first()
+
+    if request.method == 'POST':
+        form=ApplicantForm(request.POST, request.FILES, instance=applicant)
+        if request.POST.get('save_button') is not None:
+            if form.is_valid():
+                form.save()
+                if request.is_ajax():
+                    print 'AJAXform is valid'
+                else:
+                    print 'Just valid form'
+
+            else:
+                if request.is_ajax():
+                    print 'invalid AJAXform'
+                else:
+                    print 'invalid form without AJAX'
+
+        else:
+            pass
+
+    else:
+        form = ApplicantForm(instance=applicant)
+
+    return render(request, 'edit_applicant.html', {'form':form})
