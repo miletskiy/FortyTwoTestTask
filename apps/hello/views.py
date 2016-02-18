@@ -1,13 +1,13 @@
 
 from django.shortcuts import render
 from django.core import serializers
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
+import json
 
 # Create your views here.
 from .models import Applicant
 from .models import DatabaseRequest
 from .forms import ApplicantForm
-
 
 def contacts(request):
     """
@@ -44,19 +44,21 @@ def edit_applicant(request):
             if form.is_valid():
                 form.save()
                 if request.is_ajax():
-                    print 'AJAXform is valid'
+                    # print 'AJAXform is valid'
+                    return HttpResponse('Success',
+                                        content_type='application/json')
                 else:
-                    print 'Just valid form'
+                    pass
+                    # print 'Just valid form'
 
             else:
                 if request.is_ajax():
-                    print 'invalid AJAXform'
+                    # print 'invalid AJAXform+++++++++==========='
+                    return HttpResponseBadRequest(json.dumps(form.errors),
+                                            content_type='application/json')
                 else:
-                    print 'invalid form without AJAX'
-
-        else:
-            pass
-
+                    pass
+                    # print 'invalid form without AJAX ---------'
     else:
         form = ApplicantForm(instance=applicant)
 

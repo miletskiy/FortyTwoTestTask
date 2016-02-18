@@ -9,9 +9,9 @@ from ..models import Applicant
 from ..models import DatabaseRequest
 from ..views import edit_applicant
 from ..forms import ApplicantForm
-from unittest import skip
+# from unittest import skip
 
-@skip
+# @skip
 class ContactPageTest(TestCase):
     """
     Test for view contacts
@@ -86,7 +86,7 @@ class ContactPageTest(TestCase):
 
         self.assertIsInstance(field_photo, ImageField)
 
-@skip
+# @skip
 class RequestsPageTest(TestCase):
     """
     Test for requests view
@@ -158,7 +158,7 @@ class RequestsPageTest(TestCase):
 
         self.assertEqual(len(responseAJAX.content), 2)
 
-@skip
+# @skip
 class EditApplicantPageTest(TestCase):
     """
     Test for edit_applicant view
@@ -182,10 +182,11 @@ class EditApplicantPageTest(TestCase):
         """
         Check for correct page with empty db
         """
+        Applicant.objects.all().delete()
         response = self.client.get(self.edit_url)
         empty_form = ApplicantForm()
 
-        self.assertEqual(response.context['form'], empty_form)
+        self.assertEqual(str(response.context['form']), str(empty_form))
 
     def test_edit_page_contains_form_with_applicant_data(self):
         """
@@ -193,11 +194,12 @@ class EditApplicantPageTest(TestCase):
         """
         response = self.client.get(self.edit_url)
         applicant = Applicant.objects.first()
+        # print response.content
 
-        self.assertContains(response.content, applicant.first_name)
-        self.assertContains(response.content, applicant.last_name)
+        self.assertContains(response, applicant.first_name, 1, 200)
+        self.assertContains(response, applicant.last_name, 1, 200)
         self.assertIn(applicant.email,response.content)
-        self.assertIn(applicant.birthday, response.content)
+        self.assertIn(str(applicant.birthday), response.content)
 
     def test_edit_applicant_page_redirects_for_anonymous_user(self):
         """
@@ -231,19 +233,20 @@ class JSONDataPageTest(TestCase):
         Test for post data via AJAX
         """
         ERROR_MESSAGE=['This field is required.']
-        fields_list = ('first_name', 'last_name','email','jabber',
-                        'skype', 'birthday')
         url = reverse('hello:edit_applicant')
+        kwargs = {'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest'}
+
+        fields_list = ('first_name','last_name','email','jabber',
+                        'skype', 'birthday')
         data = dict.fromkeys(fields_list, '')
         data.update({'save_button':True})
-        kwargs = {'HTTP_X_REQUESTED_WITH': 'XMLHtXtpRequest'}
 
         response = self.client.post(url, data, **kwargs)
-        content = json.loads(response.content.decode())
 
+        self.assertEqual(response.status_code, 400)
+        content = json.loads(response.content)
         for k in content:
             self.assertEqual(content[k],ERROR_MESSAGE)
-        self.assertEqual(response.status_code, 400)
 
         applicant = Applicant.objects.first()
         for field in fields_list[:-1]:
@@ -254,17 +257,18 @@ class JSONDataPageTest(TestCase):
         Test for post data via AJAX
         """
         ERROR_MESSAGE=['This field is required.']
+        kwargs = {'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest'}
+        url = reverse('hello:edit_applicant')
+
         fields_list = ('first_name','last_name','email','jabber',
                         'skype', 'birthday', 'save_button')
         data_list = ('John','Galt','john.galt@gmail.com', 'john.galt@khavr.com',
                         'john.galt', '05/02/1879', True)
-        url = reverse('hello:edit_applicant')
         data = dict(zip(fields_list,data_list))
-        kwargs = {'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest'}
+
         response = self.client.post(url, data, **kwargs)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(Applicant.objects.all().count(), 2)
 
         new_applicant = Applicant.objects.first()
 

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block title %}Edit Applicant
 {% endblock title %}
@@ -99,6 +100,10 @@
     </div>
 </div>
 
-<script src="http://malsup.github.io/min/jquery.form.min.js"></script>
+<script src="{% static "js/jquery-2.2.0.min.js" %}"></script>
+<script src="http://malsup.github.com/min/jquery.form.min.js"></script>
+
+<script src="{% static "js/edit_applicant.js" %}"></script>
+
 
 {% endblock %}
