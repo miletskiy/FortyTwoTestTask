@@ -11,6 +11,10 @@
         <p>There are no applicants in database.</p>
     {% else %}
         <h2>Contacts</h2>
+      <div>
+          <a id="id_requests" href="{% url 'hello:edit_applicant' %}">edit_applicant</a>
+      </div>
+
     <div class="data">
 
     <div class="left_column">

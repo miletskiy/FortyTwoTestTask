@@ -20,38 +20,44 @@
     <div class="data">
 
         <div class="left_column">
-            <div class="string_block">
+            <div class="string_block list1">
                 <ul>
-                    <li>Name</li>
-                    <li>Last name</li>
-                    <li>Date of birth</li>
+                    <li>{{ form.first_name.label_tag }}</li>
+                    <li>{{ form.last_name.label_tag }}</li>
+                    <li>{{ form.birthday.label_tag }}</li>
                 </ul>
             </div>
             <div class="string_block list2">
                 <ul>
-                    <li>{{ form.first_name }}</li>
-                    <li>{{ form.last_name }}</li>
-                    <li>{{ form.birthday }}</li>
+                    <li>{{ form.first_name.errors }}{{ form.first_name }}</li>
+                    <li>{{ form.last_name.errors }}{{ form.last_name }}</li>
+                    <li>{{ form.birthday.errors }}{{ form.birthday }}</li>
                 </ul>
             </div>
             <br>
             <br>
-            <div>Photo:
-                <input id="id_image" name="image" type="file" />
-            </div>
+            <div>{{ form.photo }}</div>
 
+{% if form.instance.photo %}
             <br>
-            <br>
-            <img src="{{ STATIC_URL }}default.jpg" alt="Applicant_photo"
+
+            <img src="{{ form.instance.photo.url }}" alt="Applicant_photo"
             class="photo_applicant">
+
+{% else %}
+            <br>
+
+            <img src="{{ STATIC_URL }}img/default.jpg" alt="Default_photo"
+            class="photo_applicant">
+{% endif %}
 
         </div>
         <div class="right_column">
-            <div class="string_block">
+            <div class="string_block list3">
                 <ul>
-                    <li>Email:</li>
-                    <li>Jabber:</li>
-                    <li>Skype:</li>
+                    <li>{{ form.email.errors }}{{ form.email.label_tag }}</li>
+                    <li>{{ form.email.errors }}{{ form.jabber.label_tag }}</li>
+                    <li>{{ form.email.errors }}{{ form.skype.label_tag }}</li>
                 </ul>
             </div>
             <div class="string_block list4">
@@ -68,10 +74,8 @@
             <br>
                <div>{{ form.contacts }}</div>
             <br>
-            <br>
 
             <div>Bio:</div>
-            <br>
             <br>
                <div>{{ form.bio }}</div>
             <br>
@@ -79,11 +83,11 @@
         </div>
     </div>
     <br>
-
     <div>
         <input type="submit" id="id_save_button" name="save_button" value="Save" />
         <a href="{% url 'hello:contacts' %}" name="cancel_button">Cancel</a>
     </div>
+</form>
 
     {% endif %}
 
@@ -95,6 +99,6 @@
     </div>
 </div>
 
+<script src="http://malsup.github.io/min/jquery.form.min.js"></script>
+
 {% endblock %}
-
-

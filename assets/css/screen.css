@@ -54,11 +54,12 @@ h2 {
 
 .string_block {
   display: inline-block;
-  width: 30%;
+  width: 32%;
 }
 
 .string_block li {
-  margin: 7px 0;
+  padding: 1px;
+  line-height: 30px;
 }
 
 p {
@@ -93,6 +94,29 @@ th {
 .photo_applicant {
   width: 100%;
 }
-input {
-  margin: 3px 0;
+
+.list2 input,
+.list4 input {
+  width: 100%;
+}
+
+.list3 {
+  width: 24%;
+}
+.list4 {
+  width: 42%;
+}
+
+#id_save_button {
+  font-size: large;
+  width: 10%;
+}
+
+#id_save_button:hover,
+#id_photo:hover {
+  color: red;
+}
+
+input, textarea {
+  font-size: 85%;
 }

@@ -16,5 +16,5 @@ class ApplicantForm(forms.ModelForm):
             'email', 'jabber', 'skype', 'contacts', 'photo')
         widgets = {
             'contacts': Textarea(attrs={'cols':60, 'rows':3}),
-            'bio': Textarea(attrs={'cols':60, 'rows':18}),
+            'bio': Textarea(attrs={'cols':60, 'rows':16 }),
         }
