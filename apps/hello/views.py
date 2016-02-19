@@ -45,8 +45,8 @@ def edit_applicant(request):
                 form.save()
                 if request.is_ajax():
                     # print 'AJAXform is valid'
-                    return HttpResponse('Success',
-                                        content_type='application/json')
+                    return HttpResponse(json.dumps('Success'),
+                                        content_type="application/json")
                 else:
                     pass
                     # print 'Just valid form'
@@ -54,6 +54,7 @@ def edit_applicant(request):
             else:
                 if request.is_ajax():
                     # print 'invalid AJAXform+++++++++==========='
+                    print form.errors
                     return HttpResponseBadRequest(json.dumps(form.errors),
                                             content_type='application/json')
                 else:

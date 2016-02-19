@@ -109,7 +109,7 @@ th {
 
 #id_save_button {
   font-size: large;
-  width: 10%;
+  width: 20%;
 }
 
 #id_save_button:hover,
@@ -119,4 +119,27 @@ th {
 
 input, textarea {
   font-size: 85%;
+}
+
+.buttons {
+  width: 44%;
+  float: left;
+}
+.messages {
+  display: inline-block;
+  text-align: center;
+  font-size: medium;
+  width: 50%;
+}
+
+#id_successMsg{
+  color: navy;
+}
+
+#id_errorMsg{
+  color: red;
+}
+
+.buttons, .messages {
+  border: 1px solid red;
 }
