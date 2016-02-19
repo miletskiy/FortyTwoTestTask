@@ -1,5 +1,6 @@
 
 from .models import DatabaseRequest
+from django.contrib.auth.models import User
 
 
 class SavesRequestsMiddleware(object):
@@ -14,6 +15,12 @@ class SavesRequestsMiddleware(object):
         if request.is_ajax():
             return
 
-        DatabaseRequest.objects.create(path=request.path,
-                                       method=request.method,
-                                       user=request.user)
+        if request.user.is_authenticated():
+            DatabaseRequest.objects.create(path=request.path,
+                                           method=request.method,
+                                           user=request.user)
+        else:
+            anonymoususer = User()
+            DatabaseRequest.objects.create(path=request.path,
+                                           method=request.method,
+                                           user=anonymoususer)
