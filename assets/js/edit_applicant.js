@@ -2,33 +2,56 @@
 function initUpdateContact () {
 
     function disableForm() {
-        // body...
+        $('input').attr('disabled',true);
+        $('textarea').attr('disabled',true);
+        $('#id_indicator').slideDown();
+        $('#id_background_layer').show();
     };
+
     function enableForm() {
-        // body...
+        $('input').removeAttr('disabled');
+        $('textarea').removeAttr('disabled');
+        $('#id_indicator').slideUp('fast');
+        $('#id_background_layer').hide();
     };
 
     var options = {
         dataType: 'json',
-        beforeSubmit: function(form, options) {
-            // body...
+        beforeSubmit: function() {
+            $('label').removeClass('errorlist');
+            $('span:contains("*")').remove();
             disableForm();
         },
         success: function() {
             enableForm();
-            console.log('success');
             $('#id_successMsg').slideDown('slow');
             setTimeout(function() {
                 $('#id_successMsg').slideUp('slow');
             }, 4200);
         },
-        error: function() {
-            console.log('error');
+        error: function(response) {
             enableForm();
             $('#id_errorMsg').slideDown('slow');
             setTimeout(function() {
                 $('#id_errorMsg').slideUp('slow');
             }, 4200);
+            var errors = JSON.parse(response.responseText);
+            var id, errorMessage, $idElement,$labelElement;
+            for(error in errors) {
+                id = '#id_' + error;
+                $idElement = $(id);
+                errorMessage = errors[error];
+                $idElement.addClass('errorlist').val(errorMessage);
+
+                $labelElement = $("label[for='"+$idElement.attr('id')+"']")
+                $labelElement.addClass('errorlist').prepend('<span>*</span>');
+
+                $('span').addClass('errorlist');
+
+                $('.errorlist').focus(function() {
+                        $(this).val('').removeClass('errorlist');
+                });
+            };
         }
     };
 
@@ -38,6 +61,5 @@ function initUpdateContact () {
 };
 
 $(document).ready(function () {
-    // body...
     initUpdateContact();
 });

@@ -3,6 +3,7 @@ from django import forms
 from django.forms import Textarea
 
 from .models import Applicant
+from .widgets import CustomCalendarWidget
 
 
 class ApplicantForm(forms.ModelForm):
@@ -17,4 +18,5 @@ class ApplicantForm(forms.ModelForm):
         widgets = {
             'contacts': Textarea(attrs={'cols':60, 'rows':3}),
             'bio': Textarea(attrs={'cols':60, 'rows':16 }),
+            'birthday': CustomCalendarWidget()
         }

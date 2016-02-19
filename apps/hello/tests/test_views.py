@@ -9,7 +9,7 @@ from ..models import Applicant
 from ..models import DatabaseRequest
 from ..views import edit_applicant
 from ..forms import ApplicantForm
-# from unittest import skip
+from unittest import skip
 
 # @skip
 class ContactPageTest(TestCase):
@@ -158,7 +158,7 @@ class RequestsPageTest(TestCase):
 
         self.assertEqual(len(responseAJAX.content), 2)
 
-# @skip
+@skip
 class EditApplicantPageTest(TestCase):
     """
     Test for edit_applicant view
