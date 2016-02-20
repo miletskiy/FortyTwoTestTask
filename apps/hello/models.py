@@ -1,5 +1,5 @@
 from django.db import models
-
+from PIL import Image
 # Create your models here.
 
 
@@ -58,6 +58,23 @@ class Applicant(models.Model):
 
     def __unicode__(self):
         return u'{} {}'.format(self.first_name, self.last_name)
+
+    def save(self, *args, **kwargs):
+
+        size = (200, 200)
+        if self.photo:
+            super(Applicant, self).save(*args, **kwargs)
+
+            img_object = Image.open(self.photo)
+            if img_object.mode not in ("L", "RGB"):
+                img_object = img_object.convert("RGB")
+            img_object.thumbnail(size, Image.LANCZOS)
+            img_object.save(self.photo.path)
+
+        super(Applicant, self).save(*args, **kwargs)
+
+
+
 
 
 class DatabaseRequest(models.Model):
