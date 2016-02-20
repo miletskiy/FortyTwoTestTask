@@ -85,7 +85,7 @@ class NewVisitorTest(unittest.TestCase):
         self.assertEqual('Contacts', sub_header_text)
 
         # Also, he sees new link Edit info,
-        edit_info = self.browser.find_element_by_link_text('Edit info')
+        self.browser.find_element_by_link_text('Edit info')
         # and new link Logout
         logout = self.browser.find_element_by_link_text('Logout')
 

@@ -13,10 +13,10 @@ class ApplicantForm(forms.ModelForm):
 
     class Meta:
         model = Applicant
-        fields = ('first_name','last_name', 'birthday', 'bio',
-            'email', 'jabber', 'skype', 'contacts', 'photo')
+        fields = ('first_name', 'last_name', 'birthday', 'bio',
+                  'email', 'jabber', 'skype', 'contacts', 'photo')
         widgets = {
-            'contacts': Textarea(attrs={'cols':60, 'rows':3}),
-            'bio': Textarea(attrs={'cols':60, 'rows':16 }),
+            'contacts': Textarea(attrs={'cols': 60, 'rows': 3}),
+            'bio': Textarea(attrs={'cols': 60, 'rows': 16}),
             'birthday': CustomCalendarWidget()
         }

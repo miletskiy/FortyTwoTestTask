@@ -3,11 +3,13 @@ from django.shortcuts import render
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseBadRequest
 import json
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 from .models import Applicant
 from .models import DatabaseRequest
 from .forms import ApplicantForm
+
 
 def contacts(request):
     """
@@ -32,6 +34,7 @@ def requests_list(request):
     return render(request, 'requests_list.html', {'requests': requests})
 
 
+@login_required
 def edit_applicant(request):
     """
     View for edit data page
@@ -39,33 +42,23 @@ def edit_applicant(request):
     applicant = Applicant.objects.first()
 
     if request.method == 'POST':
-        form=ApplicantForm(request.POST, request.FILES, instance=applicant)
+        form = ApplicantForm(request.POST, request.FILES, instance=applicant)
         if request.POST.get('save_button') is not None:
             if form.is_valid():
                 form.save()
                 if request.is_ajax():
-                    # print 'AJAXform is valid'
                     import time
                     time.sleep(1)
                     return HttpResponse(json.dumps('Success'),
                                         content_type="application/json")
-                else:
-                    pass
-                    # print 'Just valid form'
-
             else:
                 if request.is_ajax():
-                    # print 'invalid AJAXform+++++++++==========='
                     import time
                     time.sleep(1)
-
-                    print form.errors
+                    ct = 'application/json'
                     return HttpResponseBadRequest(json.dumps(form.errors),
-                                            content_type='application/json')
-                else:
-                    pass
-                    # print 'invalid form without AJAX ---------'
+                                                  content_type=ct)
     else:
         form = ApplicantForm(instance=applicant)
 
-    return render(request, 'edit_applicant.html', {'form':form})
+    return render(request, 'edit_applicant.html', {'form': form})

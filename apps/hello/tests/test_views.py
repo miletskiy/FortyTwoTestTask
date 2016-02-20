@@ -1,17 +1,14 @@
 
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from django.http import HttpRequest
 from django.db.models import ImageField
 import json
 
 from ..models import Applicant
 from ..models import DatabaseRequest
-from ..views import edit_applicant
 from ..forms import ApplicantForm
-from unittest import skip
 
-# @skip
+
 class ContactPageTest(TestCase):
     """
     Test for view contacts
@@ -70,7 +67,7 @@ class ContactPageTest(TestCase):
         """"
         Check that database not contains objects.
         """
-        applicants = Applicant.objects.all().delete()
+        Applicant.objects.all().delete()
         applicants = Applicant.objects.all().count()
         response = self.client.get(self.home_url)
 
@@ -86,7 +83,7 @@ class ContactPageTest(TestCase):
 
         self.assertIsInstance(field_photo, ImageField)
 
-# @skip
+
 class RequestsPageTest(TestCase):
     """
     Test for requests view
@@ -158,48 +155,15 @@ class RequestsPageTest(TestCase):
 
         self.assertEqual(len(responseAJAX.content), 2)
 
-@skip
+
 class EditApplicantPageTest(TestCase):
     """
     Test for edit_applicant view
     """
+    fixtures = ['initial_data.json']
 
     def setUp(self):
         self.edit_url = reverse('hello:edit_applicant')
-
-    def test_edit_applicant_view_is_alive(self):
-        """
-        Edit_applicant view uses correct template for edit_applicant page,
-        get answer from server and passes form Applicant
-        """
-        response = self.client.get(self.edit_url)
-
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'edit_applicant.html')
-        self.assertIsInstance(response.context['form'], ApplicantForm)
-
-    def test_edit_page_contains_empty_form_with_empty_db(self):
-        """
-        Check for correct page with empty db
-        """
-        Applicant.objects.all().delete()
-        response = self.client.get(self.edit_url)
-        empty_form = ApplicantForm()
-
-        self.assertEqual(str(response.context['form']), str(empty_form))
-
-    def test_edit_page_contains_form_with_applicant_data(self):
-        """
-        Check for correct data in the form
-        """
-        response = self.client.get(self.edit_url)
-        applicant = Applicant.objects.first()
-        # print response.content
-
-        self.assertContains(response, applicant.first_name, 1, 200)
-        self.assertContains(response, applicant.last_name, 1, 200)
-        self.assertIn(applicant.email,response.content)
-        self.assertIn(str(applicant.birthday), response.content)
 
     def test_edit_applicant_page_redirects_for_anonymous_user(self):
         """
@@ -215,12 +179,47 @@ class EditApplicantPageTest(TestCase):
         Check that edit_applicant page gets correct answer from server
         for logged user
         """
-        request = HttpRequest()
-        response = edit_applicant(request,{'user':'admin','password':'admin'})
-        response = self.client.get(self.url)
+        self.client.login(username='admin', password='admin')
+        response = self.client.get(self.edit_url)
 
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.content)
+
+    def test_edit_applicant_view_is_alive(self):
+        """
+        Edit_applicant view uses correct template for edit_applicant page,
+        get answer from server and passes form Applicant
+        """
+        self.client.login(username='admin', password='admin')
+        response = self.client.get(self.edit_url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'edit_applicant.html')
+        self.assertIsInstance(response.context['form'], ApplicantForm)
+
+    def test_edit_page_contains_empty_form_with_empty_db(self):
+        """
+        Check for correct page with empty db
+        """
+        Applicant.objects.all().delete()
+        self.client.login(username='admin', password='admin')
+        response = self.client.get(self.edit_url)
+        empty_form = ApplicantForm()
+
+        self.assertEqual(str(response.context['form']), str(empty_form))
+
+    def test_edit_page_contains_form_with_applicant_data(self):
+        """
+        Check for correct data in the form
+        """
+        self.client.login(username='admin', password='admin')
+        response = self.client.get(self.edit_url)
+        applicant = Applicant.objects.first()
+
+        self.assertContains(response, applicant.first_name, 1, 200)
+        self.assertContains(response, applicant.last_name, 1, 200)
+        self.assertIn(applicant.email, response.content)
+        self.assertIn(str(applicant.birthday), response.content)
 
 
 class JSONDataPageTest(TestCase):
@@ -232,40 +231,42 @@ class JSONDataPageTest(TestCase):
         """
         Test for post data via AJAX
         """
-        ERROR_MESSAGE=['This field is required.']
+        ERROR_MESSAGE = ['This field is required.']
         url = reverse('hello:edit_applicant')
         kwargs = {'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest'}
 
-        fields_list = ('first_name','last_name','email','jabber',
-                        'skype', 'birthday')
+        fields_list = ('first_name', 'last_name', 'email', 'jabber',
+                       'skype', 'birthday')
         data = dict.fromkeys(fields_list, '')
-        data.update({'save_button':True})
+        data.update({'save_button': True})
 
+        self.client.login(username='admin', password='admin')
         response = self.client.post(url, data, **kwargs)
 
         self.assertEqual(response.status_code, 400)
         content = json.loads(response.content)
         for k in content:
-            self.assertEqual(content[k],ERROR_MESSAGE)
+            self.assertEqual(content[k], ERROR_MESSAGE)
 
         applicant = Applicant.objects.first()
         for field in fields_list[:-1]:
-            self.assertNotEqual(applicant.serializable_value(field), data[field])
+            self.assertNotEqual(applicant.serializable_value(field),
+                                data[field])
 
     def test_edit_applicant_view_POST_incorrect_data(self):
         """
         Test for post data via AJAX
         """
-        ERROR_MESSAGE=['This field is required.']
         kwargs = {'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest'}
         url = reverse('hello:edit_applicant')
 
-        fields_list = ('first_name','last_name','email','jabber',
-                        'skype', 'birthday', 'save_button')
-        data_list = ('John','Galt','john.galt@gmail.com', 'john.galt@khavr.com',
-                        'john.galt', '05/02/1879', True)
-        data = dict(zip(fields_list,data_list))
+        fields_list = ('first_name', 'last_name', 'email', 'jabber',
+                       'skype', 'birthday', 'save_button')
+        data_list = ('John', 'Galt', 'john.galt@gmail.com',
+                     'john.galt@khavr.com', 'john.galt', '05/02/1879', True)
+        data = dict(zip(fields_list, data_list))
 
+        self.client.login(username='admin', password='admin')
         response = self.client.post(url, data, **kwargs)
 
         self.assertEqual(response.status_code, 200)
@@ -273,4 +274,5 @@ class JSONDataPageTest(TestCase):
         new_applicant = Applicant.objects.first()
 
         for field in fields_list[:-2]:
-            self.assertEqual(new_applicant.serializable_value(field), data[field])
+            self.assertEqual(new_applicant.serializable_value(field),
+                             data[field])
