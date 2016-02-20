@@ -178,5 +178,62 @@ class VisitorGoesToRequestsPageTest(unittest.TestCase):
         self.check_for_headers_of_requests_table('Method')
         self.check_for_headers_of_requests_table('User')
 
+
+class VisitorGoesToEditApplicantPageTest(unittest.TestCase):
+    """
+    Test for edit applicant page
+    """
+    def setUp(self):
+        self.browser = webdriver.Firefox()
+        self.browser.implicitly_wait(2)
+
+    def tearDown(self):
+        self.browser.quit()
+
+    def test_Hawk_can_goes_to_the_edit_info_page(self):
+        """
+        Hawk goes to edit applicant page
+        """
+        # Hawk clicks Login link
+        self.browser.get(LOCALHOST)
+        login = self.browser.find_element_by_link_text('Login')
+        login.click()
+
+        # He sees the Django administration auth page.
+        header_admin = self.browser.find_element_by_id('site-name').text
+        self.assertEqual('Django administration', header_admin)
+
+        # Then he entered supersecret login and password,
+        login_admin = self.browser.find_element_by_id('id_username')
+        login_admin.send_keys('admin')
+        password = self.browser.find_element_by_id('id_password')
+        password.send_keys('admin' + Keys.RETURN)
+
+        # and click Edit info link, after that he gets on the Edit info page
+        edit_info = self.browser.find_element_by_link_text('Edit info')
+        edit_info.click()
+        # with title
+        self.assertTrue('Edit Applicant' in self.browser.title)
+        # header
+        header_text = self.browser.find_element_by_tag_name('h1').text
+        self.assertIn('42 Coffee Cups Test Assignment', header_text)
+
+        # He sees the edit page and two buttons - 'Save' and 'Cancel'
+        # He out of pure curiosity, clicks on the link 'Cancel'
+        cancel = self.browser.find_element_by_link_text('Cancel')
+        cancel.click()
+
+        # After that server redirects him to the main page
+        self.assertIn('Contacts 42 Coffee Cups Test Assignment',
+                      self.browser.title)
+        # with header,
+        header_text = self.browser.find_element_by_tag_name('h1').text
+        self.assertEqual('42 Coffee Cups Test Assignment', header_text)
+        # subheader
+        sub_header_text = self.browser.find_element_by_tag_name('h2').text
+        self.assertEqual('Contacts', sub_header_text)
+        # and link Login
+        self.browser.find_element_by_link_text('Login')
+
 if __name__ == '__main__':
     unittest.main()
