@@ -30,6 +30,8 @@ h1 {
   font-size: 1.5em;
   font-weight: 600;
   margin-bottom: 20px;
+  display: inline-block;
+  width: 80%;
 }
 
 h2 {
@@ -142,7 +144,7 @@ input, textarea {
   display: none;
 }
 
-.buttons, .messages {
+.buttons, .messages, .header_links, h2, h1 {
   /*border: 1px solid red;*/
 }
 
@@ -170,6 +172,11 @@ input, textarea {
   background: grey;
   opacity: 0.2;
 }
+
 .errorlist{
   color: red;
+}
+
+.header_links {
+  display: inline-block;
 }
