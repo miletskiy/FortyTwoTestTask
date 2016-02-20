@@ -24,8 +24,12 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.get(LOCALHOST)
         self.assertIn('Contacts 42 Coffee Cups Test Assignment',
                       self.browser.title)
+
         header_text = self.browser.find_element_by_tag_name('h1').text
-        self.assertIn('42 Coffee Cups Test Assignment', header_text)
+        self.assertEqual('42 Coffee Cups Test Assignment', header_text)
+
+        sub_header_text = self.browser.find_element_by_tag_name('h2').text
+        self.assertEqual('Contacts', sub_header_text)
 
         # He also sees contacts of the applicant
         first_name = self.browser.find_element_by_css_selector(
@@ -47,6 +51,57 @@ class NewVisitorTest(unittest.TestCase):
         requests = self.browser.find_element_by_id('id_requests').text
 
         self.assertEqual('requests', requests)
+
+    def test_hawk_can_sees_new_link_Login(self):
+        """
+        Hawk goes to hello homepage and sees new link Login
+        """
+        self.browser.get(LOCALHOST)
+        login_link = self.browser.find_element_by_id('id_login').text
+        self.assertEqual('Login', login_link)
+
+        login = self.browser.find_element_by_link_text('Login')
+        # and he out of pure curiosity clicks on the link
+        login.click()
+
+        # He sees the Django administration auth page.
+        header_admin = self.browser.find_element_by_id('site-name').text
+        self.assertEqual('Django administration', header_admin)
+
+        # Then he entered supersecret login and password,
+        login_admin = self.browser.find_element_by_id('id_username')
+        login_admin.send_keys('admin')
+        password = self.browser.find_element_by_id('id_password')
+        password.send_keys('admin' + Keys.RETURN)
+
+        # After authorization he sees the main page with title,
+        self.assertIn('Contacts 42 Coffee Cups Test Assignment',
+                      self.browser.title)
+        # header
+        header_text = self.browser.find_element_by_tag_name('h1').text
+        self.assertIn('42 Coffee Cups Test Assignment', header_text)
+        # and subheader
+        sub_header_text = self.browser.find_element_by_tag_name('h2').text
+        self.assertEqual('Contacts', sub_header_text)
+
+        # Also, he sees new link Edit info,
+        edit_info = self.browser.find_element_by_link_text('Edit info')
+        # and new link Logout
+        logout = self.browser.find_element_by_link_text('Logout')
+
+        # If he clicks Logout link, he stays on the main page
+        logout.click()
+        # and sees all the same information: title
+        self.assertIn('Contacts 42 Coffee Cups Test Assignment',
+                      self.browser.title)
+        # header
+        header_text = self.browser.find_element_by_tag_name('h1').text
+        self.assertEqual('42 Coffee Cups Test Assignment', header_text)
+        # and subheader
+        sub_header_text = self.browser.find_element_by_tag_name('h2').text
+        self.assertEqual('Contacts', sub_header_text)
+        # and link Login
+        self.browser.find_element_by_link_text('Login')
 
 
 class VisitorGoesToAdminPageTest(unittest.TestCase):
