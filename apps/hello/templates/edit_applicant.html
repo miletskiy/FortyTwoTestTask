@@ -44,17 +44,20 @@
             </div>
             <br>
             <br>
-            <div>{{ form.photo }}</div>
-
+            <div id="id_input_photo" >{{ form.photo }}</div>
+            <div id="id_photo">
     {% if form.instance.photo %}
+
             <br>
             <img src="{{ form.instance.photo.url }}" alt="Applicant_photo"
             class="photo_applicant">
     {% else %}
+
             <br>
             <img src="{{ STATIC_URL }}img/default.jpg" alt="Default_photo"
             class="photo_applicant">
     {% endif %}
+            </div>
         </div>
 
         <div class="right_column">

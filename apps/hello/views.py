@@ -47,9 +47,12 @@ def edit_applicant(request):
             if form.is_valid():
                 form.save()
                 if request.is_ajax():
+                    data = {}
+                    data['link_file']=applicant.photo.name or None
+                    print json.dumps(data)
                     import time
                     time.sleep(1)
-                    return HttpResponse(json.dumps('Success'),
+                    return HttpResponse(json.dumps(data),
                                         content_type="application/json")
             else:
                 if request.is_ajax():
