@@ -233,7 +233,8 @@ class VisitorGoesToEditApplicantPageTest(unittest.TestCase):
         sub_header_text = self.browser.find_element_by_tag_name('h2').text
         self.assertEqual('Contacts', sub_header_text)
         # and link Login
-        self.browser.find_element_by_link_text('Login')
+        self.browser.find_element_by_link_text('Edit info')
+        self.browser.find_element_by_link_text('Logout')
 
 if __name__ == '__main__':
     unittest.main()
