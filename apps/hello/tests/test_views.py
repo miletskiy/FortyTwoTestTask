@@ -83,6 +83,30 @@ class ContactPageTest(TestCase):
 
         self.assertIsInstance(field_photo, ImageField)
 
+    def test_resizing_applicant_image(self):
+        """
+        Check that applicant image resizing to 200x200 px
+        """
+        from PIL import Image
+        from StringIO import StringIO
+        from django.core.files.base import ContentFile
+
+        image_file = StringIO()
+        image = Image.new('RGBA', size=(420, 420), color=(256, 0, 0))
+        image.save(image_file, 'png')
+        image_file.seek(0)
+        django_friendly_file = ContentFile(image_file.read(), 'test.png')
+
+        applicant = Applicant.objects.first()
+        self.assertFalse(applicant.photo)
+        applicant.photo = django_friendly_file
+        applicant.save()
+        applicant = Applicant.objects.first()
+
+        self.assertTrue(applicant.photo)
+        self.assertEqual(applicant.photo.width, 200)
+        self.assertEqual(applicant.photo.height, 200)
+
 
 class RequestsPageTest(TestCase):
     """

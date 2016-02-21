@@ -74,9 +74,6 @@ class Applicant(models.Model):
         super(Applicant, self).save(*args, **kwargs)
 
 
-
-
-
 class DatabaseRequest(models.Model):
 
     class Meta:
