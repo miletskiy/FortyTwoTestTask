@@ -4,6 +4,7 @@
 {% endblock title %}
 
     {% block content %}
+{% load admin_tag %}
 
 <div class="main">
     <h1>42 Coffee Cups Test Assignment</h1>
@@ -11,6 +12,8 @@
         <p>There are no applicants in database.</p>
     {% else %}
         <h2>Contacts</h2>
+<a id="edit_link"  href="{% edit_link applicant %}">(admin)</a>
+
     <div class="left_column">
         <div class="string_block">
             <ul>
