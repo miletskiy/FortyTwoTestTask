@@ -1,6 +1,7 @@
 
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from django.template import Context, Template
 
 from ..models import Applicant
 from ..templatetags.admin_tag import edit_link
@@ -30,5 +31,24 @@ class TemplateTagAdminTest(TestCase):
                                                 anyobject._meta.model,
                                                 anyobject.pk )
 
-        sefl.assertIn(super_link, response.content)
+        self.assertIn(super_link, response.content)
         self.assertEqual(tag_link, super_link)
+
+    def test_presents_in_the_template(self):
+        """
+        Custom admin tag presents in the template
+        """
+        # self.client.login(username='admin', password = 'admin')
+        # response = self.client.get(self.home_url)
+        applicant = Applicant.objects.first()
+        anyobject = applicant
+        super_link = '{0}{1}/{2}/{3}/'.format( reverse('admin:index'),
+                                                anyobject._meta.app_lable,
+                                                anyobject._meta.model,
+                                                anyobject.pk )
+
+        template_tag = '{% load admin_tag %}{% edit_link applicant %}'
+        template = Template(template_tag)
+        context = Context({'applicant':applicant})
+
+        self.assertEqual(super_link,template.render(context))
