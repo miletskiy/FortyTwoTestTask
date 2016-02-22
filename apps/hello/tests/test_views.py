@@ -86,6 +86,7 @@ class RequestsPageTest(TestCase):
         Requests view uses correct template for requests page,
         get answer from server and passes 10 objects
         """
+        self.client.get(reverse('hello:contacts'))
         response = self.client.get(self.requests_url)
 
         self.assertEqual(response.status_code, 200)
@@ -95,25 +96,18 @@ class RequestsPageTest(TestCase):
     def test_requests_view_passes_10_objects(self):
         """
         Requests view passes exactly 10 objects
+        and view passes objects in right order
         """
         for i in range(15):
             self.client.get(reverse('hello:contacts'))
         response = self.client.get(self.requests_url)
         quantity_requests = DatabaseRequest.objects.all().count()
         length_requests = len(response.context['requests'])
+        first_request = DatabaseRequest.objects.first()
 
         self.assertEqual(length_requests, 10)
-        self.assertEqual(quantity_requests, 16)
-
-    def test_requests_view_passes_objects_in_right_order(self):
-        """
-        Check that last requests in Database matchs last request
-        """
-        response = self.client.get(self.requests_url)
-        last_request = DatabaseRequest.objects.last()
-
-        self.assertContains(response, last_request.path)
-        self.assertEqual(last_request, response.context['requests'][0])
+        self.assertEqual(quantity_requests, 15)
+        self.assertEqual(first_request.pk, 15)
 
     def test_asynchronously_udates_requests_page(self):
         """Requests page should updates asynchronously

@@ -38,10 +38,10 @@ class DatabaseRequestTest(TestCase):
         quantity_reqs = DatabaseRequest.objects.all().count()
         self.assertEqual(quantity_reqs, 0)
 
-    def test_middleware_does_not_save_with_url_requests(self):
+    def test_middleware_does_not_save_with_path_requests(self):
         """
         Check that middleware does not save requests
-        with url '/requests/'
+        with path '/requests/'
         """
         self.client.get(reverse('hello:contacts'))
         self.client.get(reverse('hello:requests'))
@@ -50,5 +50,3 @@ class DatabaseRequestTest(TestCase):
 
         self.assertEqual(quantity_reqs, 1)
         self.assertNotEqual(last_reqeust.path, reverse('hello:requests'))
-
-
