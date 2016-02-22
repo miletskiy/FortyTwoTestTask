@@ -7,55 +7,86 @@
 
 <div class="main">
     <h1>42 Coffee Cups Test Assignment</h1>
+
     {% if not applicant %}
         <p>There are no applicants in database.</p>
     {% else %}
-        <h2>Contacts</h2>
-    <div class="data">
+    <h2>Contacts</h2>
 
-    <div class="left_column">
-        <div class="string_block">
-            <ul>
-                <li>Name</li>
-                <li>Last name</li>
-                <li>Date of birth</li>
-            </ul>
-        </div>
-        <div class="string_block list2">
-            <ul>
-                <li>{{ applicant.first_name }}</li>
-                <li>{{ applicant.last_name }}</li>
-                <li>{{ applicant.birthday }}</li>
-            </ul>
-        </div>
-        <div>Bio:</div>
-            <p class="bio_text">{{ applicant.bio | linebreaks }}</p>
-        </div>
-        <div class="right_column">
+    <div class="header_links">
+        {% if user.is_authenticated  %}
+
+        <a id="id_edit_applicant" href="{% url 'hello:edit_applicant' %}">Edit info</a>
+        <span>&nbsp;</span>
+        <a id="id_logout"  href="{% url 'accounts:logout' %}?next=/">Logout</a>
+        {% else %}
+
+        <a id="id_login"  href="{% url 'accounts:login' %}?next=/">Login</a>
+        {% endif %}
+    </div>
+
+    <div class="data">
+        <div class="left_column">
             <div class="string_block">
                 <ul>
-                    <li>Email:</li>
-                    <li>Jabber:</li>
-                    <li>Skype:</li>
+                    <li>Name</li>
+                    <li>Last name</li>
+                    <li>Date of birth</li>
                 </ul>
             </div>
-            <div class="string_block list4">
+            <div class="string_block list2">
                 <ul>
-                    <li>{{ applicant.email }}</li>
-                    <li>{{ applicant.jabber }}</li>
-                    <li>{{ applicant.skype }}</li>
+                    <li>{{ applicant.first_name }}</li>
+                    <li>{{ applicant.last_name }}</li>
+                    <li>{{ applicant.birthday }}</li>
                 </ul>
             </div>
-            <div>Other contacts:</div>
-            <p>{{ applicant.contacts | linebreaks }}</p>
-        </div>
+            <br>
+            <br>
+            <div>Photo:&nbsp;{{ applicant.photo.name }}</div>
+            <br>
+
+    {% if applicant.photo %}
+            <br>
+            <img src="{{ applicant.photo.url }}" alt="Applicant_photo"
+            class="photo_applicant">
+    {% else %}
+            <br>
+            <img src="{{ STATIC_URL }}img/default.jpg" alt="Default_photo"
+            class="photo_applicant">
+    {% endif %}
+            </div>
+            <div class="right_column">
+                <div class="string_block">
+                    <ul>
+                        <li>Email:</li>
+                        <li>Jabber:</li>
+                        <li>Skype:</li>
+                    </ul>
+                </div>
+                <div class="string_block list4">
+                    <ul>
+                        <li>{{ applicant.email }}</li>
+                        <li>{{ applicant.jabber }}</li>
+                        <li>{{ applicant.skype }}</li>
+                    </ul>
+                </div>
+                <br>
+                <br>
+                <div>Other contacts:</div>
+                <div>{{ applicant.contacts | linebreaks }}</div>
+                <br>
+                <div>Bio:</div>
+                <div>{{ applicant.bio | linebreaks }}</div>
+            </div>
     </div>
     {% endif %}
-    <div class="bottom_block">
-      <hr>
-      <div>
-          <a id="id_requests" href="{% url 'hello:requests' %}">requests</a>
-      </div>
-    </div>
-</div>
+
+            <div class="bottom_block">
+                <hr>
+                    <div>
+                        <a id="id_requests" href="{% url 'hello:requests' %}">requests</a>
+                    </div>
+                </div>
+            </div>
     {% endblock %}
