@@ -20,6 +20,7 @@ function initUpdateContact () {
         beforeSubmit: function() {
             $('label').removeClass('errorlist');
             $('span:contains("*")').remove();
+            $('span:contains("This field is required.")').remove();
             disableForm();
         },
         success: function(data) {
@@ -55,16 +56,10 @@ function initUpdateContact () {
                 id = '#id_' + error;
                 $idElement = $(id);
                 errorMessage = errors[error];
-                $idElement.addClass('errorlist').val(errorMessage);
-
+                $idElement.parent('li').prepend('<span>'+errorMessage+'</span>');
                 $labelElement = $("label[for='"+$idElement.attr('id')+"']")
                 $labelElement.addClass('errorlist').prepend('<span>*</span>');
-
-                $('span').addClass('errorlist');
-
-                $('.errorlist').focus(function() {
-                        $(this).val('').removeClass('errorlist');
-                });
+                $('span').addClass('errors');
             };
         }
     };

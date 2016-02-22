@@ -175,8 +175,13 @@ input, textarea {
 
 .errorlist{
   color: red;
+  /*font-size: small;*/
 }
 
 .header_links {
   display: inline-block;
+}
+.errors {
+  color: red;
+  font-size: small;
 }

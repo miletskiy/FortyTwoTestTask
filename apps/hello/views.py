@@ -43,23 +43,21 @@ def edit_applicant(request):
 
     if request.method == 'POST':
         form = ApplicantForm(request.POST, request.FILES, instance=applicant)
-        if request.POST.get('save_button') is not None:
-            if form.is_valid():
-                form.save()
-                if request.is_ajax():
-                    data = {}
-                    data['link_file'] = applicant.photo.name or None
-                    import time
-                    time.sleep(1)
-                    return HttpResponse(json.dumps(data),
-                                        content_type="application/json")
-            else:
-                if request.is_ajax():
-                    import time
-                    time.sleep(1)
-                    ct = 'application/json'
-                    return HttpResponseBadRequest(json.dumps(form.errors),
-                                                  content_type=ct)
+        if form.is_valid():
+            form.save()
+            if request.is_ajax():
+                data = {}
+                data['link_file'] = applicant.photo.name or None
+                import time
+                time.sleep(1)
+                return HttpResponse(json.dumps(data),
+                                    content_type="application/json")
+        else:
+            if request.is_ajax():
+                import time
+                time.sleep(1)
+                return HttpResponseBadRequest(json.dumps(form.errors),
+                                              content_type='application/json')
     else:
         form = ApplicantForm(instance=applicant)
 
