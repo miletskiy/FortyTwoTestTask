@@ -2,7 +2,6 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.db.models import ImageField
-import json
 
 from ..models import Applicant
 from ..models import DatabaseRequest
@@ -198,25 +197,16 @@ class EditApplicantPageTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertFalse(response.content)
 
-    def test_edit_applicant_page_displays_for_logged_user(self):
-        """
-        Check that edit_applicant page gets correct answer from server
-        for logged user
-        """
-        self.client.login(username='admin', password='admin')
-        response = self.client.get(self.edit_url)
-
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue(response.content)
-
     def test_edit_applicant_view_is_alive(self):
         """
         Edit_applicant view uses correct template for edit_applicant page,
-        get answer from server and passes form Applicant
+        get answer from server and passes form Applicant.
+        For logged users.
         """
         self.client.login(username='admin', password='admin')
         response = self.client.get(self.edit_url)
 
+        self.assertTrue(response.content)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'edit_applicant.html')
         self.assertIsInstance(response.context['form'], ApplicantForm)
@@ -255,22 +245,19 @@ class JSONDataPageTest(TestCase):
         """
         Test for post data via AJAX
         """
-        ERROR_MESSAGE = ['This field is required.']
+        ERROR_MESSAGE = 'This field is required.'
         url = reverse('hello:edit_applicant')
         kwargs = {'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest'}
 
         fields_list = ('first_name', 'last_name', 'email', 'jabber',
                        'skype', 'birthday')
         data = dict.fromkeys(fields_list, '')
-        data.update({'save_button': True})
+        # data.update({'save_button': True})
 
         self.client.login(username='admin', password='admin')
         response = self.client.post(url, data, **kwargs)
 
-        self.assertEqual(response.status_code, 400)
-        content = json.loads(response.content)
-        for k in content:
-            self.assertEqual(content[k], ERROR_MESSAGE)
+        self.assertContains(response, ERROR_MESSAGE, 4, 200)
 
         applicant = Applicant.objects.first()
         for field in fields_list[:-1]:
@@ -285,9 +272,9 @@ class JSONDataPageTest(TestCase):
         url = reverse('hello:edit_applicant')
 
         fields_list = ('first_name', 'last_name', 'email', 'jabber',
-                       'skype', 'birthday', 'save_button')
+                       'skype', 'birthday')
         data_list = ('John', 'Galt', 'john.galt@gmail.com',
-                     'john.galt@khavr.com', 'john.galt', '05/02/1879', True)
+                     'john.galt@khavr.com', 'john.galt', '05/02/1879')
         data = dict(zip(fields_list, data_list))
 
         self.client.login(username='admin', password='admin')
@@ -297,6 +284,6 @@ class JSONDataPageTest(TestCase):
 
         new_applicant = Applicant.objects.first()
 
-        for field in fields_list[:-2]:
+        for field in fields_list[:-1]:
             self.assertEqual(new_applicant.serializable_value(field),
                              data[field])

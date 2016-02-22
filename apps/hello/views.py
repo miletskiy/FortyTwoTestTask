@@ -1,7 +1,7 @@
 
 from django.shortcuts import render
 from django.core import serializers
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse
 import json
 from django.contrib.auth.decorators import login_required
 
@@ -48,16 +48,12 @@ def edit_applicant(request):
             if request.is_ajax():
                 data = {}
                 data['link_file'] = applicant.photo.name or None
-                import time
-                time.sleep(1)
                 return HttpResponse(json.dumps(data),
                                     content_type="application/json")
         else:
             if request.is_ajax():
-                import time
-                time.sleep(1)
-                return HttpResponseBadRequest(json.dumps(form.errors),
-                                              content_type='application/json')
+                return HttpResponse(json.dumps(form.errors),
+                                    content_type='application/json')
     else:
         form = ApplicantForm(instance=applicant)
 
