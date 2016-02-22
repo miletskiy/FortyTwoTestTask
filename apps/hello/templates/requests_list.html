@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Requests{%endblock%}
+
+{% block content %}
+    <div class="main">
+        <h1>42 Coffee Cups Test Assignment</h1>
+        <h2>Requests</h2>
+    {% if not requests %}
+        <p>There are no records in the database</p>
+    {% else %}
+        <table width="100%" id="id_requests_table">
+            <tr class="title">
+                <th>Id</th>
+                <th>Title</th>
+                <th>Emergence</th>
+                <th>Path</th>
+                <th>Method</th>
+                <th>User</th>
+            </tr>
+
+            <tbody id="id_tbody">
+        {% for req in requests %}
+            <tr>
+                <td>{{ req.id }}</td>
+                <td>{{ req.title }}</td>
+                <td>{{ req.emergence }}</td>
+                <td>{{ req.path }}</td>
+                <td>{{ req.method }}</td>
+                <td>{{ req.user }}</td>
+            </tr>
+        {% endfor %}
+            </tbody>
+
+        </table>
+    {% endif %}
+        <hr>
+      <div>
+          <a href="{% url 'hello:contacts' %}">back to homepage</a>
+      </div>
+    </div>
+
+    <script src="{% static "js/jquery-2.2.0.min.js" %}"></script>
+    <script src="{% static "js/main.js" %}"></script>
+
+{% endblock %}
