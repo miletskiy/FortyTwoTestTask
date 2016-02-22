@@ -1,6 +1,7 @@
 from django.db import models
 from PIL import Image
 # Create your models here.
+from django.contrib.auth.models import User
 
 
 class Applicant(models.Model):
@@ -98,10 +99,11 @@ class DatabaseRequest(models.Model):
         max_length=4,
         verbose_name="Request method"
     )
-    user = models.CharField(
-        max_length=42,
+    user = models.ForeignKey(
+        User,
         verbose_name="User",
-        blank=True
+        blank=True,
+        null=True
     )
 
     def __unicode__(self):

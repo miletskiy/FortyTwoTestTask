@@ -11,9 +11,11 @@ class SavesRequestsMiddleware(object):
         """
         Overriding standard method
         """
-        if request.is_ajax():
+        if request.is_ajax() or request.path == '/requests/':
             return
+
+        user = request.user if request.user.is_authenticated() else None
 
         DatabaseRequest.objects.create(path=request.path,
                                        method=request.method,
-                                       user=request.user)
+                                       user=user)
