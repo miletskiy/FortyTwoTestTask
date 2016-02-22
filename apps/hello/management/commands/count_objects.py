@@ -1,10 +1,22 @@
 
 from django.core.management.base import NoArgsCommand
+from django.db.models import get_models
+
 
 class Command(NoArgsCommand):
     """
-    Check the command to print models and counting number of objects
+    Command for print models and counting number of objects
     """
+    help = 'Prints all project models and the count of objects in every model'
 
     def handle_noargs(self, **options):
-        pass
+        self.stdout.write('Model name: | Total number of objects:')
+        list_models = get_models(include_auto_created=True)
+
+        for model in list_models:
+            message = '{}: {}'.format(model._meta.object_name,
+                                      model.objects.all().count())
+            error_message = 'error: ' + message
+
+            self.stdout.write(message)
+            self.stderr.write(error_message)

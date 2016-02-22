@@ -27,9 +27,9 @@ class TemplateTagAdminTest(TestCase):
         tag_link = edit_link(applicant)
         anyobject = applicant
         super_link = '{0}{1}/{2}/{3}/'.format(reverse('admin:index'),
-                                                anyobject._meta.app_label,
-                                                anyobject._meta.model_name,
-                                                anyobject.pk)
+                                              anyobject._meta.app_label,
+                                              anyobject._meta.model_name,
+                                              anyobject.pk)
 
         self.assertIn(super_link, response.content)
         self.assertEqual(tag_link, super_link)
@@ -41,9 +41,9 @@ class TemplateTagAdminTest(TestCase):
         applicant = Applicant.objects.first()
         anyobject = applicant
         super_link = '{0}{1}/{2}/{3}/'.format(reverse('admin:index'),
-                                                anyobject._meta.app_label,
-                                                anyobject._meta.model_name,
-                                                anyobject.pk)
+                                              anyobject._meta.app_label,
+                                              anyobject._meta.model_name,
+                                              anyobject.pk)
         template_tag = '{% load admin_tag %}{% edit_link applicant %}'
         template = Template(template_tag)
         context = Context({'applicant': applicant})
