@@ -37,7 +37,8 @@ function initRequests () {
                 tableRow += '<td>' + data[i].fields.path + '</td>';
                 tableRow += '<td>' + data[i].fields.method + '</td>';
                 var user = data[i].fields.user||'None';
-                tableRow += '<td>' + user + '</td></tr>';
+                tableRow += '<td>' + user + '</td>';
+                tableRow += '<td>' + data[i].fields.priority + '</td></tr>';
                 newTable +=tableRow;
             };
             var diff = lastRequestInDb - $lastRequestOnPage;
