@@ -55,7 +55,6 @@ class TemplateTagAdminTest(TestCase):
         Custom admin tag get not model instance
         and redirects to main page
         """
-        anyobject = 'anyobject'
         tag_link = edit_link('anyobject')
 
-        self.assertEqual(tag_link, self.home_url)
+        self.assertEqual(tag_link, self.home_url+'?Dude')

@@ -7,7 +7,10 @@ register = template.Library()
 
 @register.simple_tag
 def edit_link(anyobject):
-    object_id = anyobject.id
+    try:
+        object_id = anyobject.id
+    except AttributeError:
+        return reverse('hello:contacts')+'?Dude'
 
     reverse_path = 'admin:{}_{}_change'.format(anyobject._meta.app_label,
                                                anyobject._meta.model_name)
