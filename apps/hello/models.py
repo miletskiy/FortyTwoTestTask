@@ -105,6 +105,11 @@ class DatabaseRequest(models.Model):
         blank=True,
         null=True
     )
+    priority = models.IntegerField(
+        default=0,
+        help_text=u'Please enter a number. Greater number -> higher priority.',
+        max_length=10
+    )
 
     def __unicode__(self):
         return u'{} {}'.format(self.title, self.emergence)

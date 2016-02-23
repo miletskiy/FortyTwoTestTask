@@ -15,7 +15,7 @@ class PriorityFieldTest(TestCase):
         """
         Test for saving priority DatabaseRequest models
         """
-        self.client.ger(reverse('hello:contacts'))
+        self.client.get(reverse('hello:contacts'))
         request_db = DatabaseRequest.objects.first()
 
         self.assertEqual(request_db.priority, 0)
