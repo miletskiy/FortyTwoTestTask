@@ -15,7 +15,7 @@ class SignalsTest(TestCase):
         """
         Check signal processor saves info about creation object
         """
-        self.assertEqual(EventModel.objects.all().count(), 0)
+        EventModel.objects.all().delete()
         self.client.get(reverse('hello:contacts'))
         event = EventModel.objects.last()
 
@@ -27,7 +27,7 @@ class SignalsTest(TestCase):
         """
         Check signal processor saves info about change object
         """
-        self.assertEqual(EventModel.objects.all().count(), 0)
+        EventModel.objects.all().delete()
         applicant = Applicant.objects.first()
         applicant.first_name = 'John'
         applicant.email = 'john.galt@gmail.com'
@@ -36,17 +36,18 @@ class SignalsTest(TestCase):
         self.assertEqual(EventModel.objects.all().count(), 1)
         event = EventModel.objects.last()
 
-        self.assertEqual(event.sender, applicant._meta.model_name)
+        self.assertEqual(event.sender, applicant._meta.object_name)
         self.assertEqual(event.event_type, 'CHANGE')
 
     def test_saves_entry_for_deletion_object(self):
         """
         Check signal processor saves info about deletion object
         """
-        self.assertEqual(EventModel.objects.all().count(), 0)
+        EventModel.objects.all().delete()
         applicant = Applicant.objects.first()
         applicant.delete()
+        event = EventModel.objects.last()
 
         self.assertEqual(EventModel.objects.all().count(), 1)
-        self.assertEqual(event.sender, applicant._meta.model_name)
+        self.assertEqual(event.sender, applicant._meta.object_name)
         self.assertEqual(event.event_type, 'DELETION')

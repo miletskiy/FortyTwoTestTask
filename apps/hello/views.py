@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Applicant
 from .models import DatabaseRequest
 from .forms import ApplicantForm
+from .signals import save_to_db_changes_of_objects_signal  # noqa
 
 
 def contacts(request):
