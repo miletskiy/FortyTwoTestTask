@@ -49,3 +49,13 @@ class TemplateTagAdminTest(TestCase):
         context = Context({'applicant': applicant})
 
         self.assertEqual(super_link, template.render(context))
+
+    def test_tag_accepts_NOT_model_instance(self):
+        """
+        Custom admin tag get not model instance
+        and redirects to main page
+        """
+        anyobject = 'anyobject'
+        tag_link = edit_link('anyobject')
+
+        self.assertEqual(tag_link, self.home_url)
