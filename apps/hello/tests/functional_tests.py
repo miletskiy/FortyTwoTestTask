@@ -168,6 +168,7 @@ class VisitorGoesToRequestsPageTest(unittest.TestCase):
     def test_table_for_requests_presents_on_the_page(self):
         """
         Hawk sees table for requests with headers
+        Add column 'Priority'
         """
         self.browser.get(LOCALHOST+reverse('hello:requests'))
 
@@ -177,6 +178,7 @@ class VisitorGoesToRequestsPageTest(unittest.TestCase):
         self.check_for_headers_of_requests_table('Path')
         self.check_for_headers_of_requests_table('Method')
         self.check_for_headers_of_requests_table('User')
+        self.check_for_headers_of_requests_table('Priority')
 
 
 class VisitorGoesToEditApplicantPageTest(unittest.TestCase):

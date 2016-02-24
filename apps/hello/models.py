@@ -101,10 +101,37 @@ class DatabaseRequest(models.Model):
     )
     user = models.ForeignKey(
         User,
+        to_field='username',
         verbose_name="User",
         blank=True,
         null=True
     )
+    priority = models.IntegerField(
+        default=0,
+        help_text=u'Please enter a number. Greater number -> higher priority.',
+        max_length=10
+    )
 
     def __unicode__(self):
         return u'{} {}'.format(self.title, self.emergence)
+
+
+class EventModel(models.Model):
+    """Model for saving signals into database """
+
+    sender = models.CharField(
+        max_length=30,
+        verbose_name="Event's sender"
+    )
+    emergence = models.DateTimeField(
+        auto_now_add=True,
+        editable=True,
+        verbose_name='Date time event'
+    )
+    event_type = models.CharField(
+        max_length=10,
+        verbose_name='Type of event'
+    )
+
+    def __unicode__(self):
+        return u'{} {}'.format(self.sender, self.event_type)

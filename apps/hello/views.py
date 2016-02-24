@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Applicant
 from .models import DatabaseRequest
 from .forms import ApplicantForm
+from .signals import save_to_db_changes_of_objects_signal  # noqa
 
 
 def contacts(request):
@@ -25,7 +26,15 @@ def requests_list(request):
     """
     View for requests page
     """
-    requests = DatabaseRequest.objects.all()[:10]
+    requests = DatabaseRequest.objects.all()
+    order_by = request.GET.get('order_by', '')
+
+    if order_by == 'priority':
+        requests = requests.order_by(order_by, '-emergence')
+        if request.GET.get('reverse', '') == 'true':
+            requests = requests.order_by('-priority', '-emergence')
+
+    requests = requests[:10]
 
     if request.is_ajax():
         data = serializers.serialize('json', requests)
