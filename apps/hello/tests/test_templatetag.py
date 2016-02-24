@@ -1,7 +1,7 @@
 
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from django.template import Context, Template
+from django.template import Context, Template, TemplateSyntaxError
 
 from ..models import Applicant
 from ..templatetags.admin_tag import edit_link
@@ -16,6 +16,13 @@ class TemplateTagAdminTest(TestCase):
 
     def setUp(self):
         self.home_url = reverse('hello:contacts')
+        self.applicant = Applicant.objects.first()
+        self.anyobject = self.applicant
+        self.super_link = '{0}{1}/{2}/{3}/'.format(
+            reverse('admin:index'),
+            self.anyobject._meta.app_label,
+            self.anyobject._meta.model_name,
+            self.anyobject.pk)
 
     def test_page_contains_link_to_admin_edit_page(self):
         """
@@ -23,29 +30,25 @@ class TemplateTagAdminTest(TestCase):
         """
         self.client.login(username='admin', password='admin')
         response = self.client.get(self.home_url)
-        applicant = Applicant.objects.first()
-        tag_link = edit_link(applicant)
-        anyobject = applicant
-        super_link = '{0}{1}/{2}/{3}/'.format(reverse('admin:index'),
-                                              anyobject._meta.app_label,
-                                              anyobject._meta.model_name,
-                                              anyobject.pk)
+        tag_link = edit_link(self.applicant)
 
-        self.assertIn(super_link, response.content)
-        self.assertEqual(tag_link, super_link)
+        self.assertIn(self.super_link, response.content)
+        self.assertEqual(tag_link, self.super_link)
 
     def test_presents_in_the_template(self):
         """
         Custom admin tag presents in the template
         """
-        applicant = Applicant.objects.first()
-        anyobject = applicant
-        super_link = '{0}{1}/{2}/{3}/'.format(reverse('admin:index'),
-                                              anyobject._meta.app_label,
-                                              anyobject._meta.model_name,
-                                              anyobject.pk)
         template_tag = '{% load admin_tag %}{% edit_link applicant %}'
         template = Template(template_tag)
-        context = Context({'applicant': applicant})
+        context = Context({'applicant': self.applicant})
 
-        self.assertEqual(super_link, template.render(context))
+        self.assertEqual(self.super_link, template.render(context))
+
+    def test_tag_accepts_NOT_model_instance(self):
+        """
+        Custom admin tag get not model instance
+        and redirects to main page
+        """
+        with self.assertRaises(TemplateSyntaxError):
+            edit_link('anyobject')

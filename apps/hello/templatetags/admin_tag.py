@@ -7,7 +7,11 @@ register = template.Library()
 
 @register.simple_tag
 def edit_link(anyobject):
-    object_id = anyobject.id
+    try:
+        object_id = anyobject.id
+    except AttributeError:
+        raise template.TemplateSyntaxError(
+            'edit_link tag requires a model instance')
 
     reverse_path = 'admin:{}_{}_change'.format(anyobject._meta.app_label,
                                                anyobject._meta.model_name)
