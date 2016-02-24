@@ -10,7 +10,8 @@ def edit_link(anyobject):
     try:
         object_id = anyobject.id
     except AttributeError:
-        pass
+        raise template.TemplateSyntaxError(
+            'edit_link tag requires a model instance')
 
     reverse_path = 'admin:{}_{}_change'.format(anyobject._meta.app_label,
                                                anyobject._meta.model_name)

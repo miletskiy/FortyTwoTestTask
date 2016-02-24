@@ -45,7 +45,6 @@ class TemplateTagAdminTest(TestCase):
 
         self.assertEqual(self.super_link, template.render(context))
 
-
     def test_tag_accepts_NOT_model_instance(self):
         """
         Custom admin tag get not model instance
