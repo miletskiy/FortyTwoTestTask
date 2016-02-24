@@ -30,18 +30,17 @@ class PriorityFieldTest(TestCase):
         """
         Test for sorting by priority field DatabaseRequest model
         """
-        #The sorting link is presents on the page
+        # The sorting link is presents on the page
         order_by = '?order_by=priority'
+        self.client.get(reverse('hello:contacts'))
         response = self.client.get(reverse('hello:requests'))
-        self.assertContains(response, order_by, 1, 200)
+        self.assertIn(order_by, response.content)
 
-        #After click on the order_by link webrequests sorting by priority
+        # After click on the order_by link webrequests sorting by priority
         for i in range(5):
-            # import time
-            # time.sleep(1)
             self.client.get(reverse('hello:contacts'))
 
-        for i in range(1,6):
+        for i in range(1, 6):
             webrequest = DatabaseRequest.objects.get(pk=i)
             webrequest.priority = i
             webrequest.save()
@@ -53,9 +52,9 @@ class PriorityFieldTest(TestCase):
         for i in range(5):
             self.assertEqual(response.context['requests'][i], webrequests[i])
 
-        #After another click on the order_by link webrequest reversing
-        response = self.client.get(reverse('hello:requests')+
-                                            order_by+'&reverse=true')
+        # After another click on the order_by link webrequest reversing
+        response = self.client.get(reverse('hello:requests') +
+                                   order_by+'&reverse=true')
         webrequests = webrequests.reverse()
 
         for i in range(5):

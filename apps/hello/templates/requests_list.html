@@ -18,7 +18,8 @@
                 <th>Path</th>
                 <th>Method</th>
                 <th>User</th>
-                <th>Priority</th>
+                <th><a href="{% url 'hello:requests' %}?order_by=priority{% if request.GET.order_by == 'priority' and request.GET.reverse != 'true' %}&amp;reverse=true{% endif %}">Priority{% if request.GET.order_by == 'priority' and request.GET.reverse != 'true' %}&uarr;{% elif request.GET.order_by == 'priority' and request.GET.reverse == 'true' %}&darr;{% endif %}</a>
+                </th>
             </tr>
 
             <tbody id="id_tbody">

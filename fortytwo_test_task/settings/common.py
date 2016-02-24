@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 import sys
 
+from django.conf import global_settings
+
 PROJECT_DIR = os.path.dirname(os.path.dirname(__file__))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
@@ -132,3 +134,8 @@ SOUTH_TESTS_MIGRATE = False
 FIXTURE_DIRS = (
     os.path.join(BASE_DIR, 'apps/hello/fixtures'),
 )
+
+TEMPLATE_CONTEXT_PROCESSORS = \
+    global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+        'django.core.context_processors.request',
+    )

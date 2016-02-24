@@ -30,9 +30,9 @@ def requests_list(request):
     order_by = request.GET.get('order_by', '')
 
     if order_by == 'priority':
-        requests = requests.order_by(order_by,'-emergence')
+        requests = requests.order_by(order_by, '-emergence')
         if request.GET.get('reverse', '') == 'true':
-            requests = requests.order_by('-priority','-emergence')
+            requests = requests.order_by('-priority', '-emergence')
 
     requests = requests[:10]
 
