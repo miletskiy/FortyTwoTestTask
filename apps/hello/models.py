@@ -101,6 +101,7 @@ class DatabaseRequest(models.Model):
     )
     user = models.ForeignKey(
         User,
+        to_field='username',
         verbose_name="User",
         blank=True,
         null=True
