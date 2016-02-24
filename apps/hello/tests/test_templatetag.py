@@ -1,7 +1,7 @@
 
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from django.template import Context, Template
+from django.template import Context, Template, TemplateSyntaxError
 
 from ..models import Applicant
 from ..templatetags.admin_tag import edit_link
@@ -45,11 +45,11 @@ class TemplateTagAdminTest(TestCase):
 
         self.assertEqual(self.super_link, template.render(context))
 
+
     def test_tag_accepts_NOT_model_instance(self):
         """
         Custom admin tag get not model instance
         and redirects to main page
         """
-        tag_link = edit_link('anyobject')
-
-        self.assertEqual(tag_link, self.home_url+'?Dude')
+        with self.assertRaises(TemplateSyntaxError):
+            edit_link('anyobject')

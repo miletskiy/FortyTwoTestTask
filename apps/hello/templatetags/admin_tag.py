@@ -10,7 +10,7 @@ def edit_link(anyobject):
     try:
         object_id = anyobject.id
     except AttributeError:
-        return reverse('hello:contacts')+'?Dude'
+        pass
 
     reverse_path = 'admin:{}_{}_change'.format(anyobject._meta.app_label,
                                                anyobject._meta.model_name)
